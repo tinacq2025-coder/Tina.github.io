@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tina Chen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&amp;family=Inter:wght@300;400;500&amp;display=swap" rel="stylesheet">
 <style>
   :root {
     --bg:    #faf9f7;
@@ -451,14 +449,14 @@
       <label>Password</label>
       <input type="password" id="adminPassword" placeholder="Enter password" onkeydown="if(event.key==='Enter') doLogin()">
     </div>
-    <p class="login-error" id="loginError">Incorrect password. Try again.</p>
+    <p class="login-error" id="loginError" style="display: none;">Incorrect password. Try again.</p>
     <button class="btn-primary" onclick="doLogin()" style="margin-top:16px;">Sign In</button>
     <button class="btn-secondary" onclick="closeLogin()" style="width:100%;margin-top:10px;">Cancel</button>
   </div>
 </div>
 
 <!-- =================== ADMIN PANEL =================== -->
-<div class="admin-overlay" id="adminOverlay" onclick="handleOverlayClick(event)">
+<div class="admin-overlay open" id="adminOverlay" onclick="handleOverlayClick(event)">
   <div class="admin-panel" id="adminPanel">
     <div class="admin-header">
       <h2>Content Manager</h2>
@@ -467,16 +465,16 @@
 
     <!-- TABS -->
     <div class="admin-tabs">
-      <div class="admin-tab active" onclick="switchTab('tab-articles',this)">Articles</div>
+      <div class="admin-tab" onclick="switchTab('tab-articles',this)">Articles</div>
       <div class="admin-tab" onclick="switchTab('tab-photos',this)">Photos</div>
       <div class="admin-tab" onclick="switchTab('tab-paintings',this)">Paintings</div>
       <div class="admin-tab" onclick="switchTab('tab-aiprojects',this)">AI Projects</div>
-      <div class="admin-tab" onclick="switchTab('tab-profile',this)">Profile</div>
+      <div class="admin-tab active" onclick="switchTab('tab-profile',this)">Profile</div>
       <div class="admin-tab" onclick="switchTab('tab-edit',this)">Edit Texts</div>
     </div>
 
     <!-- ARTICLES TAB -->
-    <div class="admin-pane active" id="tab-articles">
+    <div class="admin-pane" id="tab-articles">
       <div class="admin-section-title">Add New Article</div>
       <div class="field-row">
         <div class="field">
@@ -511,7 +509,7 @@
       <button class="btn-primary" onclick="addArticle()">Add Article</button>
 
       <div class="admin-section-title" style="margin-top:28px;">Existing Articles</div>
-      <div class="admin-items" id="admin-articles-list"></div>
+      <div class="admin-items" id="admin-articles-list"><div class="admin-item"><div class="admin-item-thumb-placeholder">📝</div><div class="admin-item-info"><div class="admin-item-title">AI Infrastructure: Mapping the full stack</div><div class="admin-item-meta">Sector study · — · <span style="color:var(--muted);">no content yet</span></div></div><div class="admin-item-actions"><button class="btn-secondary" onclick="editArticle(2)" style="margin-right:4px;">Edit</button><button class="btn-danger" onclick="deleteArticle(2)">Delete</button></div></div><div class="admin-item"><div class="admin-item-thumb-placeholder">📝</div><div class="admin-item-info"><div class="admin-item-title">Reading a hyperscaler's capex cycle</div><div class="admin-item-meta">Company study · — · <span style="color:var(--muted);">no content yet</span></div></div><div class="admin-item-actions"><button class="btn-secondary" onclick="editArticle(3)" style="margin-right:4px;">Edit</button><button class="btn-danger" onclick="deleteArticle(3)">Delete</button></div></div></div>
     </div>
 
     <!-- PHOTOS TAB -->
@@ -552,7 +550,7 @@
       <button class="btn-primary" onclick="addPhoto()">Add Photo</button>
 
       <div class="admin-section-title" style="margin-top:28px;">Existing Photos</div>
-      <div class="admin-items" id="admin-photos-list"></div>
+      <div class="admin-items" id="admin-photos-list"><div class="admin-item"><img class="admin-item-thumb" src="images/building_sky.jpg" alt="Untitled"><div class="admin-item-info"><div class="admin-item-title">Untitled</div><div class="admin-item-meta">Shanghai 2025</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(1773483341087)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/japan_people.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Japan</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(1773493518400)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/yoga_classroom.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Hong Kong</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(1773493563723)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/painting_light.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta"></div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(1773493579852)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/light_2.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Shanghai</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(1773493609644)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/light.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Shanghai</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(1773493624292)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/japan_cars.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Japan</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(1773493640743)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/korea_girl.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Korea</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(1773493664763)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/reading.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Shanghai 2025</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(1773493680877)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/staircase.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Wuzhen, Zhejiang Province</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(1773493716972)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/wall.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Dali, Yunan Province</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(1773493732225)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/hk_sea.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Hong Kong</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(1773493750290)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/flower.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Yunan Province</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(1773493762957)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/vase_2.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Wuzhen, Zhejiang Province</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(1773493784841)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/vase.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Wuzhen, Zhejiang Province</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(1773493798137)">Delete</button></div></div></div>
     </div>
 
     <!-- PAINTINGS TAB -->
@@ -593,7 +591,7 @@
       <button class="btn-primary" onclick="addPainting()">Add Painting</button>
 
       <div class="admin-section-title" style="margin-top:28px;">Existing Paintings</div>
-      <div class="admin-items" id="admin-paintings-list"></div>
+      <div class="admin-items" id="admin-paintings-list"><div class="admin-item"><img class="admin-item-thumb" src="images/books_coffee.jpg" alt="Untitled"><div class="admin-item-info"><div class="admin-item-title">Untitled</div><div class="admin-item-meta">Oil on canvas</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(1773482021417)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/cup_lemon.jpg" alt="Still Life with Lemons in a White Vase"><div class="admin-item-info"><div class="admin-item-title">Still Life with Lemons in a White Vase</div><div class="admin-item-meta">After Neil Carroll</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(1773493878263)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/fruits.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Personal Practice</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(1773493919067)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/lemon.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Personal Practice</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(1773493931292)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/lights_in_forest.jpg" alt="Tree Shadows on a White Building"><div class="admin-item-info"><div class="admin-item-title">Tree Shadows on a White Building</div><div class="admin-item-meta">After Miho Ichise</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(1773493951998)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/moon.jpg" alt="Moonlight"><div class="admin-item-info"><div class="admin-item-title">Moonlight</div><div class="admin-item-meta">Original Work</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(1773493978736)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/morandi_still_life_01.jpg" alt="Natura Morta (Still Life with Vases and Jars)"><div class="admin-item-info"><div class="admin-item-title">Natura Morta (Still Life with Vases and Jars)</div><div class="admin-item-meta">After Giorgio Morandi</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(1773494003842)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/morandi_still_life_02.jpg" alt="Natura Morta (Still Life with Vases and Jars)"><div class="admin-item-info"><div class="admin-item-title">Natura Morta (Still Life with Vases and Jars)</div><div class="admin-item-meta">After Giorgio Morandi</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(1773494022102)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/sunrise.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Personal Practice</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(1773494040674)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/thinking_girl.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Personal Practice</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(1773494054481)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/women.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Personal Practice</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(1773494063696)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/yellow_flower.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Personal Practice</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(1773494079151)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/塑料袋中的橘子_展示.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Personal Practice</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(1773494101100)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/candle.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Personal Practice</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(1773494171224)">Delete</button></div></div><div class="admin-item"><img class="admin-item-thumb" src="images/日落_展示.jpg" alt=""><div class="admin-item-info"><div class="admin-item-title"></div><div class="admin-item-meta">Personal Practice</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(1773494200911)">Delete</button></div></div></div>
     </div>
 
     <!-- AI PROJECTS TAB -->
@@ -623,7 +621,7 @@
       </div>
       <button class="btn-primary" onclick="addMilestone()">Add Milestone</button>
       <div class="admin-section-title" style="margin-top:28px;">Existing Milestones</div>
-      <div class="admin-items" id="admin-milestones-list"></div>
+      <div class="admin-items" id="admin-milestones-list"><div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">Built: Built this personal website end-to-end via vibe coding with Claude — zero manual HTML</div><div class="admin-item-meta">Mar 2026</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deleteMilestone(1773494310390)">Delete</button></div></div><div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">Built: Built a live stock portfolio monitor and synced it to Google Sheets via vibe coding with Claude</div><div class="admin-item-meta">Mar 2026</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deleteMilestone(1773494321635)">Delete</button></div></div><div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">Learned: Completed Generative AI for Everyone by Andrew Ng — concepts, tools, and real-world applications of gen AI</div><div class="admin-item-meta">Feb 2026</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deleteMilestone(1773494343583)">Delete</button></div></div><div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">Learned: Completed AI for Everyone by Andrew Ng — grounding in AI strategy and organisational impact</div><div class="admin-item-meta">Feb 2026</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deleteMilestone(1773494356361)">Delete</button></div></div><div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">Installed: Set up OpenClaw on Windows WSL, troubleshot with 豆包</div><div class="admin-item-meta">Feb 2026</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deleteMilestone(1773494372079)">Delete</button></div></div><div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">Built: Prototyped an Animal Crossing–style personal museum (动森风个人博物馆) via vibe coding with Gemini</div><div class="admin-item-meta">Dec 2025</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deleteMilestone(1773494382198)">Delete</button></div></div><div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">Built: Built a farming simulation game (种田游戏) via vibe coding with Gemini</div><div class="admin-item-meta">Dec 2025</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deleteMilestone(1773494390670)">Delete</button></div></div></div>
 
       <div class="admin-section-title" style="margin-top:32px;">Add Project</div>
       <div class="field">
@@ -646,12 +644,12 @@
       </div>
       <button class="btn-primary" onclick="addProject()">Add Project</button>
       <div class="admin-section-title" style="margin-top:28px;">Existing Projects</div>
-      <div class="admin-items" id="admin-projects-list"></div>
+      <div class="admin-items" id="admin-projects-list"><div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">Personal Website</div><div class="admin-item-meta">Built entirely through vibe coding with Claude - no manual HTML written</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deleteProject(1773494569744)">Delete</button></div></div></div>
 
     </div>
 
     <!-- PROFILE TAB -->
-    <div class="admin-pane" id="tab-profile">
+    <div class="admin-pane active" id="tab-profile">
       <div class="admin-section-title">Profile Photo</div>
       <div style="background:rgba(192,57,43,0.06);border:1px solid rgba(192,57,43,0.2);border-radius:6px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:var(--muted);line-height:1.7;">
         <strong style="color:var(--ink);">📁 How to set your profile photo</strong><br>
@@ -719,15 +717,15 @@
 </div>
 
 <!-- =================== TOAST =================== -->
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast">Project deleted.</div>
 
 <!-- =================== MAIN SITE =================== -->
 <header>
   <nav class="topnav">
     <span class="topnav-logo" onclick="showPage('home')">Tina Chen</span>
     <a onclick="showPage('research')" id="nav-research">Research Notes</a>
-    <a onclick="showPage('aiprojects')" id="nav-aiprojects">AI Projects</a>
-    <a onclick="showPage('art')" id="nav-art">Artworks</a>
+    <a onclick="showPage('aiprojects')" id="nav-aiprojects" class="">AI Projects</a>
+    <a onclick="showPage('art')" id="nav-art" class="active">Artworks</a>
     <a onclick="showPage('sources')" id="nav-sources">Reading List</a>
     <a onclick="showPage('about')" id="nav-about">About</a>
     <span class="topnav-spacer"></span>
@@ -736,7 +734,7 @@
 </header>
 
 <!-- HOME -->
-<div class="page active" id="page-home">
+<div class="page" id="page-home">
   <div class="home-outer">
     <div class="home-hero">
       <div class="home-hero-text">
@@ -749,8 +747,8 @@
           <div class="hero-meta-item"><strong>Based</strong><span id="hero-meta-based">Shanghai</span></div>
         </div>
       </div>
-      <img class="home-photo" id="profilePhotoEl" src="" alt="Tina Chen" style="display:none;">
-      <div id="profilePhotoPlaceholder" class="home-photo" style="background:var(--bg2);display:flex;align-items:center;justify-content:center;border-radius:2px;"><span style="font-size:12px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;">Your photo</span></div>
+      <img class="home-photo" id="profilePhotoEl" src="images/tina_photo.jpg" alt="Tina Chen" style="display: block;">
+      <div id="profilePhotoPlaceholder" class="home-photo" style="background: var(--bg2); display: none; align-items: center; justify-content: center; border-radius: 2px;"><span style="font-size:12px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;">Your photo</span></div>
     </div>
 
     <div class="home-section">
@@ -758,7 +756,7 @@
         <span class="home-section-title">Recent research</span>
         <span class="home-section-link" onclick="showPage('research')">All notes →</span>
       </div>
-      <div id="home-recent-research"></div>
+      <div id="home-recent-research"><div class="home-note-row"><span class="row-tag">Company study</span><span class="row-title">Reading a hyperscaler's capex cycle<span class="row-sub">What datacenter buildout numbers signal about enterprise AI timelines</span></span><span class="row-date">—</span></div><div class="home-note-row"><span class="row-tag">Sector study</span><span class="row-title">AI Infrastructure: Mapping the full stack<span class="row-sub">From chip design to the application layer — where does value accumulate?</span></span><span class="row-date">—</span></div></div>
     </div>
 
     <div class="home-section">
@@ -766,7 +764,7 @@
         <span class="home-section-title">Recent artworks</span>
         <span class="home-section-link" onclick="showPage('art')">All works →</span>
       </div>
-      <div id="home-recent-art" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;"></div>
+      <div id="home-recent-art" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;"><div onclick="showPage('art')" style="aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer;"><img src="images/yellow_flower.jpg" style="width:100%;height:100%;object-fit:cover;" alt=""></div><div onclick="showPage('art')" style="aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer;"><img src="images/塑料袋中的橘子_展示.jpg" style="width:100%;height:100%;object-fit:cover;" alt=""></div><div onclick="showPage('art')" style="aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer;"><img src="images/candle.jpg" style="width:100%;height:100%;object-fit:cover;" alt=""></div><div onclick="showPage('art')" style="aspect-ratio: 1 / 1; overflow: hidden; cursor: pointer;"><img src="images/日落_展示.jpg" style="width:100%;height:100%;object-fit:cover;" alt=""></div></div>
     </div>
   </div>
 </div>
@@ -794,11 +792,11 @@
         </div>
         <div id="section-company" style="margin-top:44px;">
           <div class="section-group-label">Company Studies</div>
-          <ul class="note-list" id="notes-company"></ul>
+          <ul class="note-list" id="notes-company"><li class="note-item" style="cursor: pointer;"><span class="note-title"><span class="note-tag-inline">Analysis</span>Reading a hyperscaler's capex cycle<span class="note-desc">What datacenter buildout numbers signal about enterprise AI timelines</span></span><span class="note-date">—</span></li></ul>
         </div>
         <div id="section-sector" style="margin-top:44px;">
           <div class="section-group-label">Sector Studies</div>
-          <ul class="note-list" id="notes-sector"></ul>
+          <ul class="note-list" id="notes-sector"><li class="note-item" style="cursor: pointer;"><span class="note-title"><span class="note-tag-inline">Deep Tech</span>AI Infrastructure: Mapping the full stack<span class="note-desc">From chip design to the application layer — where does value accumulate?</span></span><span class="note-date">—</span></li></ul>
         </div>
       </div>
     </div>
@@ -845,7 +843,7 @@
         <!-- LEARNING LOG -->
         <div id="ai-timeline">
           <div class="section-group-label">Learning Log</div>
-          <div id="milestones-list" style="margin-top:16px;position:relative;padding-left:24px;border-left:2px solid var(--rule);"></div>
+          <div id="milestones-list" style="margin-top:16px;position:relative;padding-left:24px;border-left:2px solid var(--rule);"><div class="milestone-entry"><div class="milestone-type">Built</div><div class="milestone-title">Built a farming simulation game (种田游戏) via vibe coding with Gemini</div><div class="milestone-date">Dec 2025</div></div><div class="milestone-entry"><div class="milestone-type">Built</div><div class="milestone-title">Prototyped an Animal Crossing–style personal museum (动森风个人博物馆) via vibe coding with Gemini</div><div class="milestone-date">Dec 2025</div></div><div class="milestone-entry"><div class="milestone-type">Installed</div><div class="milestone-title">Set up OpenClaw on Windows WSL, troubleshot with 豆包</div><div class="milestone-date">Feb 2026</div></div><div class="milestone-entry"><div class="milestone-type">Learned</div><div class="milestone-title">Completed AI for Everyone by Andrew Ng — grounding in AI strategy and organisational impact</div><div class="milestone-date">Feb 2026</div></div><div class="milestone-entry"><div class="milestone-type">Learned</div><div class="milestone-title">Completed Generative AI for Everyone by Andrew Ng — concepts, tools, and real-world applications of gen AI</div><div class="milestone-date">Feb 2026</div></div><div class="milestone-entry"><div class="milestone-type">Built</div><div class="milestone-title">Built a live stock portfolio monitor and synced it to Google Sheets via vibe coding with Claude</div><div class="milestone-date">Mar 2026</div></div><div class="milestone-entry"><div class="milestone-type">Built</div><div class="milestone-title">Built this personal website end-to-end via vibe coding with Claude — zero manual HTML</div><div class="milestone-date">Mar 2026</div></div></div>
         </div>
 
         <!-- ACTIVITIES -->
@@ -864,7 +862,7 @@
         <!-- PROJECTS -->
         <div id="ai-projectlist" style="margin-top:52px;">
           <div class="section-group-label">My Projects</div>
-          <div id="projects-grid" style="margin-top:16px;display:grid;grid-template-columns:repeat(2,1fr);gap:2px;"></div>
+          <div id="projects-grid" style="margin-top:16px;display:grid;grid-template-columns:repeat(2,1fr);gap:2px;"><a class="project-card" href="#"><div class="project-card-title">Personal Website</div><div class="project-card-desc">Built entirely through vibe coding with Claude - no manual HTML written</div><div class="project-card-tools">Built with CLAUDE</div><div class="project-card-arrow"></div></a></div>
         </div>
 
         <!-- PLATFORMS -->
@@ -899,7 +897,7 @@
 </div>
 
 <!-- ART -->
-<div class="page" id="page-art">
+<div class="page active" id="page-art">
   <div class="outer">
     <div class="two-col">
       <div class="sidebar">
@@ -916,11 +914,11 @@
         </div>
         <div id="section-paintings">
           <div class="art-section-label">Oil Paintings</div>
-          <div class="art-grid paintings" id="paintings-grid"></div>
+          <div class="art-grid paintings" id="paintings-grid"><div class="art-cell tall"><div class="art-cell-inner"><img src="images/books_coffee.jpg" alt="Untitled" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-title">Untitled</div><div class="art-caption-meta">Oil on canvas</div></div></div><div class="art-cell tall"><div class="art-cell-inner"><img src="images/cup_lemon.jpg" alt="Still Life with Lemons in a White Vase" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-title">Still Life with Lemons in a White Vase</div><div class="art-caption-meta">After Neil Carroll</div></div></div><div class="art-cell"><div class="art-cell-inner"><img src="images/fruits.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Personal Practice</div></div></div><div class="art-cell"><div class="art-cell-inner"><img src="images/lemon.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Personal Practice</div></div></div><div class="art-cell"><div class="art-cell-inner"><img src="images/lights_in_forest.jpg" alt="Tree Shadows on a White Building" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-title">Tree Shadows on a White Building</div><div class="art-caption-meta">After Miho Ichise</div></div></div><div class="art-cell"><div class="art-cell-inner"><img src="images/moon.jpg" alt="Moonlight" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-title">Moonlight</div><div class="art-caption-meta">Original Work</div></div></div><div class="art-cell"><div class="art-cell-inner"><img src="images/morandi_still_life_01.jpg" alt="Natura Morta (Still Life with Vases and Jars)" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-title">Natura Morta (Still Life with Vases and Jars)</div><div class="art-caption-meta">After Giorgio Morandi</div></div></div><div class="art-cell"><div class="art-cell-inner"><img src="images/morandi_still_life_02.jpg" alt="Natura Morta (Still Life with Vases and Jars)" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-title">Natura Morta (Still Life with Vases and Jars)</div><div class="art-caption-meta">After Giorgio Morandi</div></div></div><div class="art-cell"><div class="art-cell-inner"><img src="images/sunrise.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Personal Practice</div></div></div><div class="art-cell tall"><div class="art-cell-inner"><img src="images/thinking_girl.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Personal Practice</div></div></div><div class="art-cell tall"><div class="art-cell-inner"><img src="images/women.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Personal Practice</div></div></div><div class="art-cell"><div class="art-cell-inner"><img src="images/yellow_flower.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Personal Practice</div></div></div><div class="art-cell tall"><div class="art-cell-inner"><img src="images/塑料袋中的橘子_展示.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Personal Practice</div></div></div><div class="art-cell tall"><div class="art-cell-inner"><img src="images/candle.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Personal Practice</div></div></div><div class="art-cell tall"><div class="art-cell-inner"><img src="images/日落_展示.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Personal Practice</div></div></div></div>
         </div>
         <div id="section-photos" style="margin-top:52px;">
           <div class="art-section-label">Photography</div>
-          <div class="art-grid" id="photos-grid"></div>
+          <div class="art-grid" id="photos-grid"><div class="art-cell tall"><div class="art-cell-inner"><img src="images/building_sky.jpg" alt="Untitled" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-title">Untitled</div><div class="art-caption-meta">Shanghai 2025</div></div></div><div class="art-cell"><div class="art-cell-inner"><img src="images/japan_people.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Japan</div></div></div><div class="art-cell"><div class="art-cell-inner"><img src="images/yoga_classroom.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Hong Kong</div></div></div><div class="art-cell tall"><div class="art-cell-inner"><img src="images/painting_light.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta"></div></div></div><div class="art-cell tall"><div class="art-cell-inner"><img src="images/light_2.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Shanghai</div></div></div><div class="art-cell tall"><div class="art-cell-inner"><img src="images/light.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Shanghai</div></div></div><div class="art-cell"><div class="art-cell-inner"><img src="images/japan_cars.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Japan</div></div></div><div class="art-cell tall"><div class="art-cell-inner"><img src="images/korea_girl.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Korea</div></div></div><div class="art-cell tall"><div class="art-cell-inner"><img src="images/reading.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Shanghai 2025</div></div></div><div class="art-cell tall"><div class="art-cell-inner"><img src="images/staircase.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Wuzhen, Zhejiang Province</div></div></div><div class="art-cell"><div class="art-cell-inner"><img src="images/wall.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Dali, Yunan Province</div></div></div><div class="art-cell"><div class="art-cell-inner"><img src="images/hk_sea.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Hong Kong</div></div></div><div class="art-cell"><div class="art-cell-inner"><img src="images/flower.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Yunan Province</div></div></div><div class="art-cell"><div class="art-cell-inner"><img src="images/vase_2.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Wuzhen, Zhejiang Province</div></div></div><div class="art-cell"><div class="art-cell-inner"><img src="images/vase.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div><div class="art-caption"><div class="art-caption-meta">Wuzhen, Zhejiang Province</div></div></div></div>
         </div>
       </div>
     </div>
@@ -937,7 +935,7 @@
     <div class="sources-grid">
       <a class="source-tile" href="https://a16z.com" target="_blank">
         <div class="source-icon" style="background:#000;color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;letter-spacing:-0.03em;">a16z</div>
-        <div><div class="source-tile-name">Andreessen Horowitz</div><div class="source-tile-type">Venture Capital · Essays & Podcast</div></div>
+        <div><div class="source-tile-name">Andreessen Horowitz</div><div class="source-tile-type">Venture Capital · Essays &amp; Podcast</div></div>
         <div class="source-tile-arrow">a16z.com →</div>
       </a>
       <a class="source-tile" href="https://stratechery.com" target="_blank">
@@ -968,24 +966,24 @@
           <p>Hi, I'm Tina Chen (陈倩) — an <strong>investment professional</strong> with <strong>7+ years</strong> across private equity, investment banking, and equity research.</p>
           <p>My career has spanned <strong>Warburg Pincus</strong>, <strong>Goldman Sachs</strong>, and <strong>Morgan Stanley</strong>, with a focus on <strong>Asia digital infrastructure</strong> and <strong>fintech</strong>. I've worked on deals ranging from a <strong>US$470M data center investment</strong> in China to pan-Asia platform scaling for a <strong>1GW hyperscaler network</strong>.</p>
           <p>I'm drawn to the intersection of <strong>physical infrastructure and AI</strong> — the data centers, power grids, and capital structures that make intelligence at scale possible. I write to clarify my own thinking, and occasionally to share what I find.</p>
-          <p>Outside of work, I paint in <strong>oils</strong> and am deeply interested in <strong>sociology</strong> (社会学) and <strong>anthropology</strong> (人类学). I studied <strong>Economics & Finance</strong> with a minor in <strong>Art History</strong> at the University of Hong Kong, and spent time at Wellesley College.</p>
+          <p>Outside of work, I paint in <strong>oils</strong> and am deeply interested in <strong>sociology</strong> (社会学) and <strong>anthropology</strong> (人类学). I studied <strong>Economics &amp; Finance</strong> with a minor in <strong>Art History</strong> at the University of Hong Kong, and spent time at Wellesley College.</p>
         </div>
         <div class="about-section">
           <div class="about-section-title">Experience</div>
           <div class="exp-row"><div class="exp-top"><span class="exp-role">Senior Associate</span><span class="exp-period">2021 – 2025</span></div><div class="exp-org">Warburg Pincus · Private Equity · Shanghai</div><div class="exp-desc">Led deal execution on a US$470M data center investment (Bohao) and supported pan-Asia platform scaling for Princeton Digital Group ($3B+ capital initiatives). Covered AI infrastructure, GPU/CPU leasing, and hyperscaler capex dynamics. Managed portfolio oversight, restructuring, and exit initiatives across China exit-stage investments.</div></div>
-          <div class="exp-row"><div class="exp-top"><span class="exp-role">Analyst → Associate</span><span class="exp-period">2018 – 2021</span></div><div class="exp-org">Goldman Sachs · Investment Banking · Hong Kong</div><div class="exp-desc">Executed IPO and M&A mandates across Asia fintech and insurance. Key transactions include IPO of Lexin Fintech (Nasdaq), IPO of FWD Insurance (HKEx), AIA's proposed acquisition of Union Life Insurance, and a US$1B sale of stake in Taikang Insurance to Allianz.</div></div>
+          <div class="exp-row"><div class="exp-top"><span class="exp-role">Analyst → Associate</span><span class="exp-period">2018 – 2021</span></div><div class="exp-org">Goldman Sachs · Investment Banking · Hong Kong</div><div class="exp-desc">Executed IPO and M&amp;A mandates across Asia fintech and insurance. Key transactions include IPO of Lexin Fintech (Nasdaq), IPO of FWD Insurance (HKEx), AIA's proposed acquisition of Union Life Insurance, and a US$1B sale of stake in Taikang Insurance to Allianz.</div></div>
           <div class="exp-row"><div class="exp-top"><span class="exp-role">Summer Analyst</span><span class="exp-period">2017</span></div><div class="exp-org">Morgan Stanley · Equity Research · Hong Kong</div><div class="exp-desc">Supported initiation coverage of Qudian (NYSE: QD); assisted with investor inquiries across China Financials and Fintech coverage.</div></div>
           <div class="exp-row"><div class="exp-top"><span class="exp-role">Part-time Analyst</span><span class="exp-period">2017</span></div><div class="exp-org">Petrel Capital · Hedge Fund · Hong Kong</div><div class="exp-desc">Developed investment memos and pitched long/short ideas across Consumer, Auto, TMT, and Real Estate sectors.</div></div>
-          <div class="exp-row"><div class="exp-top"><span class="exp-role">Summer Analyst</span><span class="exp-period">2016</span></div><div class="exp-org">Bank of China International · Investment Banking · Hong Kong</div><div class="exp-desc">Contributed to FIG M&A and IPO transactions: valuation analysis, financial modeling, and industry research.</div></div>
-          <div class="exp-row"><div class="exp-top"><span class="exp-role">Summer Analyst</span><span class="exp-period">2015</span></div><div class="exp-org">Citibank · Financial Planning & Analysis · Hong Kong</div></div>
+          <div class="exp-row"><div class="exp-top"><span class="exp-role">Summer Analyst</span><span class="exp-period">2016</span></div><div class="exp-org">Bank of China International · Investment Banking · Hong Kong</div><div class="exp-desc">Contributed to FIG M&amp;A and IPO transactions: valuation analysis, financial modeling, and industry research.</div></div>
+          <div class="exp-row"><div class="exp-top"><span class="exp-role">Summer Analyst</span><span class="exp-period">2015</span></div><div class="exp-org">Citibank · Financial Planning &amp; Analysis · Hong Kong</div></div>
         </div>
         <div class="about-section">
           <div class="about-section-title">Education</div>
-          <div class="exp-row"><div class="exp-top"><span class="exp-role">BEcon&Fin, Minor in Art History</span><span class="exp-period">2013 – 2018</span></div><div class="exp-org">The University of Hong Kong</div><div class="exp-desc">First Class Honours · Major GPA 3.9, CGPA 3.8 · Dean's List · Soong Ching Ling Scholarship (RMB 200,000) · Top 0.1% in 2013 National College Entrance Exam (Beijing)</div></div>
+          <div class="exp-row"><div class="exp-top"><span class="exp-role">BEcon&amp;Fin, Minor in Art History</span><span class="exp-period">2013 – 2018</span></div><div class="exp-org">The University of Hong Kong</div><div class="exp-desc">First Class Honours · Major GPA 3.9, CGPA 3.8 · Dean's List · Soong Ching Ling Scholarship (RMB 200,000) · Top 0.1% in 2013 National College Entrance Exam (Beijing)</div></div>
           <div class="exp-row"><div class="exp-top"><span class="exp-role">Exchange Program</span><span class="exp-period">2015</span></div><div class="exp-org">Wellesley College · Boston</div></div>
         </div>
         <div class="about-section">
-          <div class="about-section-title">Skills & Interests</div>
+          <div class="about-section-title">Skills &amp; Interests</div>
           <div class="skills-row"><strong>Languages</strong> &nbsp; Mandarin (native) · English (professional) · Cantonese</div>
           <div class="skills-row"><strong>Interests</strong> &nbsp; Oil Painting · Sociology (社会学) · Anthropology (人类学)</div>
         </div>
@@ -1003,7 +1001,7 @@
 
 <footer>
   <span class="f-name">Tina Chen</span>
-  <span class="f-copy" id="footer-copy"></span>
+  <span class="f-copy" id="footer-copy">© 2026 Tina Chen</span>
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -1593,5 +1591,5 @@
   setupPreviewListeners();
   document.getElementById('footer-copy').textContent = '© ' + new Date().getFullYear() + ' Tina Chen';
 </script>
-</body>
-</html>
+
+</body></html>
