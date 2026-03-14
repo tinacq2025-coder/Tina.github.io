@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tina Chen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:    #faf9f7;
+    --bg2:   #f0ede8;
+    --ink:   #1a1814;
+    --muted: #7a7060;
+    --accent:#c0392b;
+    --rule:  #d8d2c6;
+    --serif: "Lora", Georgia, serif;
+    --sans:  "Inter", system-ui, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.7; font-weight: 400; min-height: 100vh; }
+
+
+  /* ARTICLE PAGE */
+  .article-back { display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); cursor:pointer; margin-bottom:36px; text-decoration:none; transition:color 0.15s; }
+  .article-back:hover { color:var(--ink); }
+  .article-header { max-width:680px; margin-bottom:40px; padding-bottom:32px; border-bottom:1px solid var(--rule); }
+  .article-category { font-size:11px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
+  .article-title { font-family:var(--serif); font-size:2rem; font-weight:600; line-height:1.25; color:var(--ink); margin-bottom:14px; }
+  .article-desc { font-size:16px; color:var(--muted); line-height:1.7; margin-bottom:18px; }
+  .article-meta { font-size:12px; color:var(--muted); display:flex; gap:16px; align-items:center; }
+  .article-meta-tag { background:var(--bg2); border-radius:3px; padding:3px 8px; font-weight:500; }
+  .article-body { max-width:680px; }
+  .article-body p { font-size:16px; line-height:1.85; color:var(--ink); margin-bottom:1.4em; }
+  .article-body p:first-child::first-letter { font-family:var(--serif); font-size:3.2em; font-weight:600; float:left; line-height:0.8; margin:6px 10px 0 0; color:var(--accent); }
+  .article-empty { font-size:15px; color:var(--muted); font-style:italic; padding:40px 0; }
+
+  /* NAV */
+  .topnav { display: flex; align-items: center; padding: 0 48px; border-bottom: 1px solid var(--rule); position: sticky; top: 0; background: var(--bg); z-index: 100; gap: 0; }
+  .topnav-logo { font-family: var(--serif); font-size: 1rem; font-weight: 600; color: var(--ink); padding: 14px 28px 14px 0; cursor: pointer; border-right: 1px solid var(--rule); margin-right: 4px; flex-shrink: 0; white-space: nowrap; }
+  .topnav a { font-family: var(--sans); font-size: 13px; font-weight: 400; color: var(--muted); text-decoration: none; padding: 16px 18px; cursor: pointer; transition: color 0.15s; white-space: nowrap; }
+  .topnav a:hover { color: var(--ink); }
+  .topnav a.active { color: var(--accent); font-weight: 500; }
+  .topnav-spacer { flex: 1; }
+  .admin-btn { font-size: 12px !important; color: var(--muted) !important; border: 1px solid var(--rule) !important; border-radius: 4px !important; padding: 6px 14px !important; margin-left: 8px !important; }
+  .admin-btn:hover { background: var(--bg2) !important; color: var(--ink) !important; }
+
+  /* PAGES */
+  .page { display: none; animation: fadeIn 0.3s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  /* LAYOUT */
+  .outer { max-width: 1040px; margin: 0 auto; padding: 64px 48px; }
+  .two-col { display: grid; grid-template-columns: 172px 1fr; gap: 60px; align-items: start; }
+  .sidebar { position: sticky; top: 68px; }
+  .sidebar-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  .sidebar-links { list-style: none; }
+  .sidebar-links li { margin-bottom: 2px; }
+  .sidebar-links a { font-size: 14px; color: var(--muted); text-decoration: none; cursor: pointer; padding: 4px 0 4px 10px; display: block; transition: color 0.15s; border-left: 2px solid transparent; }
+  .sidebar-links a:hover { color: var(--ink); }
+  .sidebar-links a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 500; }
+
+  /* HOME */
+  .home-outer { max-width: 1040px; margin: 0 auto; padding: 72px 48px 64px; }
+  .home-hero { display: grid; grid-template-columns: 1fr 200px; gap: 56px; align-items: start; margin-bottom: 64px; }
+  .home-hero-text h1 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 500; font-style: italic; line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 20px; }
+  .home-hero-text p { font-size: 15px; line-height: 1.85; color: #3d3830; max-width: 500px; }
+  .hero-meta { margin-top: 26px; display: flex; gap: 32px; flex-wrap: wrap; }
+  .hero-meta-item { font-size: 12px; color: var(--muted); }
+  .hero-meta-item strong { display: block; font-size: 14px; color: var(--ink); font-weight: 500; margin-bottom: 1px; }
+  .home-photo { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: center top; display: block; }
+
+  .home-section { border-top: 1px solid var(--rule); padding-top: 40px; margin-top: 0; }
+  .home-section + .home-section { margin-top: 40px; }
+  .home-section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; }
+  .home-section-title { font-family: var(--serif); font-size: 1.05rem; font-style: italic; font-weight: 500; }
+  .home-section-link { font-size: 12px; color: var(--accent); cursor: pointer; font-weight: 500; }
+  .home-section-link:hover { text-decoration: underline; }
+  .home-note-row { display: grid; grid-template-columns: 88px 1fr auto; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); cursor: pointer; border-radius: 2px; transition: background 0.12s; align-items: start; }
+  .home-note-row:first-of-type { border-top: 1px solid var(--rule); }
+  .home-note-row:hover { background: var(--bg2); margin: 0 -12px; padding: 12px 12px; }
+  .row-tag { font-size: 11px; color: var(--muted); padding-top: 2px; }
+  .row-title { font-size: 15px; font-weight: 500; line-height: 1.4; }
+  .row-title .row-sub { display: block; font-size: 13px; font-weight: 300; color: var(--muted); margin-top: 2px; }
+  .row-date { font-size: 12px; color: var(--muted); white-space: nowrap; padding-top: 2px; text-align: right; }
+
+  /* PAGE HEADERS */
+  .page-header-block { border-bottom: 1px solid var(--rule); padding-bottom: 28px; margin-bottom: 40px; }
+  .page-title { font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 500; font-style: italic; margin-bottom: 8px; line-height: 1.15; }
+  .page-subtitle { font-size: 14px; color: var(--muted); max-width: 460px; line-height: 1.75; }
+
+  /* NOTES */
+  .section-group-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 36px 0 4px; }
+  .section-group-label:first-child { margin-top: 0; }
+  .note-list { list-style: none; }
+  .note-item { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--rule); cursor: pointer; border-radius: 2px; transition: background 0.12s; }
+  .note-item:hover { background: var(--bg2); margin: 0 -12px; padding: 14px 12px; }
+  .note-date { font-size: 12px; color: var(--muted); white-space: nowrap; padding-top: 2px; text-align: right; }
+  .note-title { font-size: 15px; font-weight: 500; line-height: 1.45; }
+  .note-title .note-tag-inline { font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; margin-right: 8px; }
+  .note-title .note-desc { display: block; font-size: 13px; font-weight: 300; color: var(--muted); margin-top: 3px; line-height: 1.6; }
+
+  /* ART */
+  .art-section-label { font-family: var(--serif); font-size: 1.05rem; font-style: italic; font-weight: 500; margin: 36px 0 12px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+  .art-section-label:first-of-type { margin-top: 0; }
+  .art-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+  .art-grid.paintings { grid-template-columns: repeat(2, 1fr); }
+  .art-cell { background: var(--bg2); aspect-ratio: 4/3; position: relative; overflow: hidden; cursor: pointer; }
+  .art-cell.tall { aspect-ratio: 3/4; }
+  .art-cell-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transition: transform 0.4s ease; }
+  .art-cell:hover .art-cell-inner { transform: scale(1.04); }
+  .art-cell-inner img { width: 100%; height: 100%; object-fit: cover; }
+  .art-placeholder-label { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; }
+  .art-caption { position: absolute; bottom:0; left:0; right:0; background: linear-gradient(transparent, rgba(26,24,20,0.8)); padding: 28px 14px 12px; opacity: 0; transition: opacity 0.25s; }
+  .art-cell:hover .art-caption { opacity: 1; }
+  .art-caption-title { font-family: var(--serif); font-size: 13px; font-style: italic; color: #f0ede6; line-height: 1.3; }
+  .art-caption-meta { font-size: 11px; color: rgba(240,237,230,0.6); margin-top: 2px; }
+  .art-cell.p1 { background: linear-gradient(135deg,#e6d9c4,#c8b898); }
+  .art-cell.p2 { background: linear-gradient(135deg,#d8cdb8,#b0976c); }
+  .art-cell.p3 { background: linear-gradient(135deg,#d4c4a8,#c8b080); }
+  .art-cell.p4 { background: linear-gradient(135deg,#e2d4b8,#d0b888); }
+
+  /* READING LIST */
+  .sources-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+  .source-tile { background: var(--bg2); padding: 32px 28px; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; transition: background 0.15s; text-decoration: none; color: inherit; }
+  .source-tile:hover { background: #e0dbd2; }
+  .source-icon { width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .source-tile-name { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; font-style: italic; line-height: 1.2; color: var(--ink); }
+  .source-tile-type { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .source-tile-arrow { font-size: 13px; color: var(--accent); margin-top: auto; padding-top: 8px; }
+
+  /* ABOUT */
+  .about-grid { display: block; max-width: 680px; }
+  .about-contact { list-style: none; border-top: 1px solid var(--rule); padding-top: 24px; margin-top: 8px; display: flex; flex-wrap: wrap; gap: 0 40px; }
+  .about-contact li { display: flex; gap: 10px; font-size: 13px; padding: 7px 0; border-bottom: 1px solid var(--rule); line-height: 1.4; align-items: baseline; }
+  .contact-key { font-size: 11px; font-weight: 500; color: var(--muted); min-width: 52px; padding-top: 1px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .contact-val a { color: var(--ink); text-decoration: none; }
+  .contact-val a:hover { color: var(--accent); }
+  .about-bio { font-size: 15px; line-height: 1.85; color: #2a2520; margin-bottom: 40px; }
+  .about-bio p { margin-bottom: 14px; }
+  .about-section { margin-bottom: 36px; }
+  .about-section-title { font-family: var(--serif); font-size: 1.05rem; font-style: italic; font-weight: 500; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+  .exp-row { margin-bottom: 20px; }
+  .exp-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 2px; flex-wrap: wrap; }
+  .exp-role { font-size: 14px; font-weight: 500; }
+  .exp-period { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .exp-org { font-size: 12px; color: var(--accent); font-weight: 500; margin-bottom: 3px; letter-spacing: 0.03em; }
+  .exp-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .skills-row { font-size: 14px; line-height: 1.7; margin-bottom: 8px; }
+  .skills-row strong { color: var(--ink); font-weight: 500; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--rule); padding: 22px 48px; display: flex; justify-content: space-between; align-items: center; max-width: 1040px; margin: 0 auto; }
+  footer .f-name { font-family: var(--serif); font-size: 14px; font-style: italic; color: var(--muted); }
+  footer .f-copy { font-size: 12px; color: var(--muted); }
+
+  /* ===================== CMS / ADMIN STYLES ===================== */
+
+  /* Overlay */
+  .admin-overlay { display: none; position: fixed; inset: 0; background: rgba(26,24,20,0.6); z-index: 1000; backdrop-filter: blur(2px); }
+  .admin-overlay.open { display: flex; align-items: flex-start; justify-content: flex-end; }
+
+  /* Sidebar panel */
+  .admin-panel {
+    width: 480px; height: 100vh; background: var(--bg); overflow-y: auto;
+    border-left: 1px solid var(--rule);
+    display: flex; flex-direction: column;
+    animation: slideIn 0.25s ease;
+  }
+  @keyframes slideIn { from { transform: translateX(40px); opacity:0; } to { transform: translateX(0); opacity:1; } }
+
+  .admin-header {
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid var(--rule);
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; background: var(--bg); z-index: 10;
+  }
+  .admin-header h2 { font-family: var(--serif); font-size: 1.1rem; font-style: italic; font-weight: 500; }
+  .admin-close { background: none; border: none; cursor: pointer; font-size: 20px; color: var(--muted); line-height: 1; padding: 4px; }
+  .admin-close:hover { color: var(--ink); }
+
+  /* Tab nav */
+  .admin-tabs { display: flex; border-bottom: 1px solid var(--rule); padding: 0 28px; gap: 0; }
+  .admin-tab { font-size: 12px; font-weight: 500; color: var(--muted); padding: 12px 16px; cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.15s; }
+  .admin-tab:hover { color: var(--ink); }
+  .admin-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* Tab pane */
+  .admin-pane { display: none; padding: 24px 28px; flex: 1; }
+  .admin-pane.active { display: block; }
+
+  /* Form elements */
+  .field { margin-bottom: 18px; }
+  .field label { display: block; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .field input, .field textarea, .field select {
+    width: 100%; background: var(--bg2); border: 1px solid var(--rule);
+    color: var(--ink); font-family: var(--sans); font-size: 14px;
+    padding: 10px 12px; border-radius: 4px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); }
+  .field textarea { resize: vertical; min-height: 80px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* Upload zone */
+  .upload-zone {
+    border: 2px dashed var(--rule); border-radius: 6px;
+    padding: 32px 20px; text-align: center; cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    background: transparent;
+  }
+  .upload-zone:hover, .upload-zone.drag-over { border-color: var(--accent); background: rgba(192,57,43,0.04); }
+  .upload-zone input[type=file] { display: none; }
+  .upload-zone-icon { font-size: 28px; margin-bottom: 10px; opacity: 0.5; }
+  .upload-zone-text { font-size: 13px; color: var(--muted); }
+  .upload-zone-text strong { color: var(--accent); }
+  .upload-preview { width: 100%; max-height: 160px; object-fit: cover; border-radius: 4px; margin-top: 12px; display: none; }
+
+  /* Buttons */
+  .btn-primary {
+    background: var(--accent); color: #fff; border: none; border-radius: 4px;
+    font-family: var(--sans); font-size: 13px; font-weight: 500;
+    padding: 11px 24px; cursor: pointer; width: 100%;
+    transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-secondary {
+    background: transparent; color: var(--muted); border: 1px solid var(--rule); border-radius: 4px;
+    font-family: var(--sans); font-size: 12px;
+    padding: 6px 14px; cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .btn-secondary:hover { color: var(--ink); border-color: var(--ink); }
+  .btn-danger {
+    background: transparent; color: #c0392b; border: 1px solid rgba(192,57,43,0.3); border-radius: 4px;
+    font-family: var(--sans); font-size: 12px;
+    padding: 5px 12px; cursor: pointer;
+  }
+  .btn-danger:hover { background: rgba(192,57,43,0.08); }
+
+  /* Items list in admin */
+  .admin-items { margin-top: 20px; }
+  .admin-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid var(--rule);
+  }
+  .admin-item-thumb { width: 48px; height: 48px; object-fit: cover; border-radius: 3px; flex-shrink: 0; background: var(--bg2); }
+  .admin-item-thumb-placeholder { width: 48px; height: 48px; border-radius: 3px; flex-shrink: 0; background: var(--bg2); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .admin-item-info { flex: 1; min-width: 0; }
+  .admin-item-title { font-size: 13px; font-weight: 500; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .admin-item-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .admin-item-actions { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+
+  /* Section divider in admin */
+  .admin-section-title { font-family: var(--serif); font-size: 0.95rem; font-style: italic; font-weight: 500; margin: 24px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+  .admin-section-title:first-child { margin-top: 0; }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--ink); color: var(--bg); font-size: 13px;
+    padding: 12px 24px; border-radius: 6px; z-index: 2000;
+    transition: transform 0.3s ease;
+    pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* Login modal */
+  .login-modal {
+    display: none; position: fixed; inset: 0; background: rgba(26,24,20,0.7);
+    z-index: 2000; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .login-modal.open { display: flex; }
+  .login-box {
+    background: var(--bg); border: 1px solid var(--rule); border-radius: 8px;
+    padding: 36px; width: 360px;
+    animation: fadeIn 0.2s ease;
+  }
+  .login-box h3 { font-family: var(--serif); font-size: 1.2rem; font-style: italic; margin-bottom: 6px; }
+  .login-box p { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+  .login-error { font-size: 12px; color: var(--accent); margin-top: 8px; display: none; }
+
+  /* Add button floats */
+  .add-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--ink); color: var(--bg);
+    border: none; border-radius: 4px;
+    font-family: var(--sans); font-size: 12px; font-weight: 500;
+    padding: 8px 16px; cursor: pointer;
+    transition: opacity 0.15s;
+    margin-top: 16px;
+  }
+  .add-btn:hover { opacity: 0.8; }
+  .add-btn-plus { font-size: 16px; line-height: 1; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .topnav, .home-outer, .outer, footer { padding-left: 20px; padding-right: 20px; }
+    .two-col, .about-grid { grid-template-columns: 1fr; gap: 36px; }
+    .sidebar { position: static; }
+    .home-hero { grid-template-columns: 1fr; }
+    .home-photo { width: 140px; }
+    .art-grid { grid-template-columns: repeat(2,1fr); }
+    .sources-grid { grid-template-columns: 1fr; }
+    .note-item { grid-template-columns: 1fr; }
+    .note-date { display: none; }
+    .home-note-row { grid-template-columns: 1fr; }
+    .admin-panel { width: 100vw; }
+  }
+</style>
+</head>
+<body>
+
+<!-- =================== LOGIN MODAL =================== -->
+<div class="login-modal" id="loginModal">
+  <div class="login-box">
+    <h3>Admin Access</h3>
+    <p>Enter your password to manage content.</p>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="adminPassword" placeholder="Enter password" onkeydown="if(event.key==='Enter') doLogin()">
+    </div>
+    <p class="login-error" id="loginError">Incorrect password. Try again.</p>
+    <button class="btn-primary" onclick="doLogin()" style="margin-top:16px;">Sign In</button>
+    <button class="btn-secondary" onclick="closeLogin()" style="width:100%;margin-top:10px;">Cancel</button>
+  </div>
+</div>
+
+<!-- =================== ADMIN PANEL =================== -->
+<div class="admin-overlay" id="adminOverlay" onclick="handleOverlayClick(event)">
+  <div class="admin-panel" id="adminPanel">
+    <div class="admin-header">
+      <h2>Content Manager</h2>
+      <button class="admin-close" onclick="closeAdmin()">✕</button>
+    </div>
+
+    <!-- TABS -->
+    <div class="admin-tabs">
+      <div class="admin-tab active" onclick="switchTab('tab-articles',this)">Articles</div>
+      <div class="admin-tab" onclick="switchTab('tab-photos',this)">Photos</div>
+      <div class="admin-tab" onclick="switchTab('tab-paintings',this)">Paintings</div>
+      <div class="admin-tab" onclick="switchTab('tab-profile',this)">Profile</div>
+      <div class="admin-tab" onclick="switchTab('tab-edit',this)">Edit Texts</div>
+    </div>
+
+    <!-- ARTICLES TAB -->
+    <div class="admin-pane active" id="tab-articles">
+      <div class="admin-section-title">Add New Article</div>
+      <div class="field-row">
+        <div class="field">
+          <label>Category</label>
+          <select id="art-category">
+            <option value="Quick note">Quick Note</option>
+            <option value="Sector study">Sector Study</option>
+            <option value="Company study">Company Study</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Tag Label</label>
+          <input type="text" id="art-tag" placeholder="e.g. AI, Infra, Analysis">
+        </div>
+      </div>
+      <div class="field">
+        <label>Title</label>
+        <input type="text" id="art-title" placeholder="Article title">
+      </div>
+      <div class="field">
+        <label>Subtitle / Description</label>
+        <input type="text" id="art-desc" placeholder="One-line summary">
+      </div>
+      <div class="field">
+        <label>Article Content (full text)</label>
+        <textarea id="art-content" rows="6" placeholder="Write your full article here..."></textarea>
+      </div>
+      <div class="field">
+        <label>Date</label>
+        <input type="text" id="art-date" placeholder="e.g. Mar 2025">
+      </div>
+      <button class="btn-primary" onclick="addArticle()">Add Article</button>
+
+      <div class="admin-section-title" style="margin-top:28px;">Existing Articles</div>
+      <div class="admin-items" id="admin-articles-list"></div>
+    </div>
+
+    <!-- PHOTOS TAB -->
+    <div class="admin-pane" id="tab-photos">
+      <div style="background:rgba(192,57,43,0.06);border:1px solid rgba(192,57,43,0.2);border-radius:6px;padding:12px 14px;margin-bottom:20px;font-size:12px;color:var(--muted);line-height:1.7;">
+        <strong style="color:var(--ink);">📁 How images work on GitHub Pages</strong><br>
+        Upload your image files into an <code>images/</code> folder in your GitHub repo. Then enter just the filename below (e.g. <code>tokyo-2024.jpg</code>). The site will load it from <code>images/yourfile.jpg</code> automatically.
+      </div>
+      <div class="admin-section-title">Add New Photo</div>
+      <div class="field">
+        <label>Image filename (e.g. tokyo-2024.jpg)</label>
+        <input type="text" id="photo-filename" placeholder="tokyo-2024.jpg">
+      </div>
+      <div class="field">
+        <label>Preview URL (optional — paste full URL to preview before publishing)</label>
+        <input type="text" id="photo-preview-url" placeholder="https://... or leave blank">
+      </div>
+      <div id="photo-preview-box" style="display:none;margin-bottom:12px;">
+        <img id="photoPreviewImg" style="width:100%;max-height:160px;object-fit:cover;border-radius:4px;">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Title</label>
+          <input type="text" id="photo-title" placeholder="Photo title">
+        </div>
+        <div class="field">
+          <label>Layout</label>
+          <select id="photo-layout">
+            <option value="">Regular (4:3)</option>
+            <option value="tall">Tall (3:4)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Caption</label>
+        <input type="text" id="photo-caption" placeholder="Location · Year">
+      </div>
+      <button class="btn-primary" onclick="addPhoto()">Add Photo</button>
+
+      <div class="admin-section-title" style="margin-top:28px;">Existing Photos</div>
+      <div class="admin-items" id="admin-photos-list"></div>
+    </div>
+
+    <!-- PAINTINGS TAB -->
+    <div class="admin-pane" id="tab-paintings">
+      <div style="background:rgba(192,57,43,0.06);border:1px solid rgba(192,57,43,0.2);border-radius:6px;padding:12px 14px;margin-bottom:20px;font-size:12px;color:var(--muted);line-height:1.7;">
+        <strong style="color:var(--ink);">📁 How images work on GitHub Pages</strong><br>
+        Upload your painting images into an <code>images/</code> folder in your GitHub repo, then enter just the filename below.
+      </div>
+      <div class="admin-section-title">Add New Painting</div>
+      <div class="field">
+        <label>Image filename (e.g. red-landscape.jpg)</label>
+        <input type="text" id="painting-filename" placeholder="red-landscape.jpg">
+      </div>
+      <div class="field">
+        <label>Preview URL (optional)</label>
+        <input type="text" id="painting-preview-url" placeholder="https://... or leave blank">
+      </div>
+      <div id="painting-preview-box" style="display:none;margin-bottom:12px;">
+        <img id="paintingPreviewImg" style="width:100%;max-height:160px;object-fit:cover;border-radius:4px;">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Title</label>
+          <input type="text" id="painting-title" placeholder="Painting title">
+        </div>
+        <div class="field">
+          <label>Layout</label>
+          <select id="painting-layout">
+            <option value="">Regular (4:3)</option>
+            <option value="tall">Tall (3:4)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Caption</label>
+        <input type="text" id="painting-caption" placeholder="Oil on canvas · Year">
+      </div>
+      <button class="btn-primary" onclick="addPainting()">Add Painting</button>
+
+      <div class="admin-section-title" style="margin-top:28px;">Existing Paintings</div>
+      <div class="admin-items" id="admin-paintings-list"></div>
+    </div>
+
+    <!-- PROFILE TAB -->
+    <div class="admin-pane" id="tab-profile">
+      <div class="admin-section-title">Profile Photo</div>
+      <div style="background:rgba(192,57,43,0.06);border:1px solid rgba(192,57,43,0.2);border-radius:6px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:var(--muted);line-height:1.7;">
+        <strong style="color:var(--ink);">📁 How to set your profile photo</strong><br>
+        Upload your photo (e.g. <code>tina.jpg</code>) into the <code>images/</code> folder in your GitHub repo, then enter the filename below.
+      </div>
+      <div class="field">
+        <label>Profile photo filename (e.g. tina.jpg)</label>
+        <input type="text" id="profile-filename" placeholder="tina.jpg">
+      </div>
+      <div class="field">
+        <label>Preview URL (optional — paste to preview)</label>
+        <input type="text" id="profile-preview-url" placeholder="https://...">
+      </div>
+      <div id="profile-preview-box" style="display:none;margin-bottom:12px;">
+        <img id="profilePreviewImg" style="width:120px;height:160px;object-fit:cover;border-radius:4px;">
+      </div>
+      <button class="btn-primary" onclick="saveProfilePhoto()">Set as Profile Photo</button>
+      <div style="margin-top:10px;">
+        <button class="btn-secondary" onclick="removeProfilePhoto()">Remove photo</button>
+      </div>
+      <div class="admin-section-title" style="margin-top:32px;">📤 Export for GitHub</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">Downloads <code>index.html</code> with all your content and image references baked in. Push this file + your <code>images/</code> folder to GitHub and your site is live.</p>
+      <button class="btn-primary" style="background:var(--ink);" onclick="exportForGitHub()">⬇ Download for GitHub</button>
+    </div>
+
+    <!-- EDIT TEXTS TAB -->
+    <div class="admin-pane" id="tab-edit">
+      <div class="admin-section-title">Homepage Hero</div>
+      <div class="field">
+        <label>Headline</label>
+        <input type="text" id="edit-headline" placeholder="Part investor, part painter...">
+      </div>
+      <div class="field">
+        <label>Bio paragraph</label>
+        <textarea id="edit-bio" rows="4" placeholder="Your intro bio..."></textarea>
+      </div>
+      <div class="field">
+        <label>Tagline (second line)</label>
+        <input type="text" id="edit-tagline" placeholder="This site is a working record...">
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Background label</label><input type="text" id="edit-meta-bg" placeholder="PE · IB · Equity Research"></div>
+        <div class="field"><label>Focus label</label><input type="text" id="edit-meta-focus" placeholder="AI Infra · Deep Tech"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Based label</label><input type="text" id="edit-meta-based" placeholder="Shanghai"></div>
+      </div>
+
+      <div class="admin-section-title" style="margin-top:24px;">Research Notes page</div>
+      <div class="field">
+        <label>Subtitle</label>
+        <input type="text" id="edit-research-sub" placeholder="Working notes on AI...">
+      </div>
+
+      <div class="admin-section-title" style="margin-top:24px;">About page</div>
+      <div class="field">
+        <label>Bio (full)</label>
+        <textarea id="edit-about-bio" rows="5" placeholder="Your full about bio..."></textarea>
+      </div>
+
+      <button class="btn-primary" onclick="saveTexts()" style="margin-top:8px;">Save Text Changes</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- =================== TOAST =================== -->
+<div class="toast" id="toast"></div>
+
+<!-- =================== MAIN SITE =================== -->
+<header>
+  <nav class="topnav">
+    <span class="topnav-logo" onclick="showPage('home')">Tina Chen</span>
+    <a onclick="showPage('research')" id="nav-research">Research Notes</a>
+    <a onclick="showPage('art')" id="nav-art">Artworks</a>
+    <a onclick="showPage('sources')" id="nav-sources">Reading List</a>
+    <a onclick="showPage('about')" id="nav-about">About</a>
+    <span class="topnav-spacer"></span>
+    <a class="admin-btn" onclick="openAdminGate()">✏︎ Manage</a>
+  </nav>
+</header>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="home-outer">
+    <div class="home-hero">
+      <div class="home-hero-text">
+        <h1 id="hero-headline">Part investor, part painter, full-time curious.</h1>
+        <p id="hero-bio">I'm Tina Chen. After 7 years investing across Warburg Pincus, Goldman Sachs, and Morgan Stanley — from data center deals to fintech IPOs — I'm now writing about what I see at the intersection of AI infrastructure, capital markets, and deep tech.</p>
+        <p id="hero-tagline" style="margin-top:12px; font-size:15px; line-height:1.85; color:#3d3830;">This site is a working record: research notes, sector maps, and the occasional oil painting.</p>
+        <div class="hero-meta">
+          <div class="hero-meta-item"><strong>Background</strong><span id="hero-meta-bg">PE · IB · Equity Research</span></div>
+          <div class="hero-meta-item"><strong>Focus</strong><span id="hero-meta-focus">AI Infra · Deep Tech</span></div>
+          <div class="hero-meta-item"><strong>Based</strong><span id="hero-meta-based">Shanghai</span></div>
+        </div>
+      </div>
+      <img class="home-photo" id="profilePhotoEl" src="" alt="Tina Chen" style="display:none;">
+      <div id="profilePhotoPlaceholder" class="home-photo" style="background:var(--bg2);display:flex;align-items:center;justify-content:center;border-radius:2px;"><span style="font-size:12px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;">Your photo</span></div>
+    </div>
+
+    <div class="home-section">
+      <div class="home-section-header">
+        <span class="home-section-title">Recent research</span>
+        <span class="home-section-link" onclick="showPage('research')">All notes →</span>
+      </div>
+      <div id="home-recent-research"></div>
+    </div>
+
+    <div class="home-section">
+      <div class="home-section-header">
+        <span class="home-section-title">Recent artworks</span>
+        <span class="home-section-link" onclick="showPage('art')">All works →</span>
+      </div>
+      <div id="home-recent-art" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- RESEARCH -->
+<div class="page" id="page-research">
+  <div class="outer">
+    <div class="two-col">
+      <div class="sidebar">
+        <div class="sidebar-label">In this section</div>
+        <ul class="sidebar-links">
+          <li><a class="active" onclick="goSection('section-quick',this)">Quick Notes</a></li>
+          <li><a onclick="goSection('section-sector',this)">Sector Studies</a></li>
+          <li><a onclick="goSection('section-company',this)">Company Studies</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="page-header-block">
+          <h2 class="page-title">Research Notes</h2>
+          <p class="page-subtitle" id="research-subtitle">Working notes on AI, deep tech, and the infrastructure of intelligence. Updated irregularly.</p>
+        </div>
+        <div id="section-quick">
+          <div class="section-group-label">Quick Notes</div>
+          <ul class="note-list" id="notes-quick"></ul>
+        </div>
+        <div id="section-sector" style="margin-top:44px;">
+          <div class="section-group-label">Sector Studies</div>
+          <ul class="note-list" id="notes-sector"></ul>
+        </div>
+        <div id="section-company" style="margin-top:44px;">
+          <div class="section-group-label">Company Studies</div>
+          <ul class="note-list" id="notes-company"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ARTICLE DETAIL -->
+<div class="page" id="page-article">
+  <div class="outer" style="max-width:800px;">
+    <a class="article-back" onclick="showPage('research')">← Back to Research Notes</a>
+    <div class="article-header">
+      <div class="article-category" id="article-detail-category"></div>
+      <h1 class="article-title" id="article-detail-title"></h1>
+      <p class="article-desc" id="article-detail-desc"></p>
+      <div class="article-meta">
+        <span class="article-meta-tag" id="article-detail-tag"></span>
+        <span id="article-detail-date"></span>
+      </div>
+    </div>
+    <div class="article-body" id="article-detail-body"></div>
+  </div>
+</div>
+
+<!-- ART -->
+<div class="page" id="page-art">
+  <div class="outer">
+    <div class="two-col">
+      <div class="sidebar">
+        <div class="sidebar-label">In this section</div>
+        <ul class="sidebar-links">
+          <li><a class="active" onclick="goSection('section-photos',this)">Photography</a></li>
+          <li><a onclick="goSection('section-paintings',this)">Oil Paintings</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="page-header-block">
+          <h2 class="page-title">Artworks</h2>
+          <p class="page-subtitle">Photography and oil painting. The analog counterweight to a digital day job.</p>
+        </div>
+        <div id="section-photos">
+          <div class="art-section-label">Photography</div>
+          <div class="art-grid" id="photos-grid"></div>
+        </div>
+        <div id="section-paintings" style="margin-top:52px;">
+          <div class="art-section-label">Oil Paintings</div>
+          <div class="art-grid paintings" id="paintings-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- READING LIST -->
+<div class="page" id="page-sources">
+  <div class="outer">
+    <div class="page-header-block" style="max-width:640px;">
+      <h2 class="page-title">Reading List</h2>
+      <p class="page-subtitle">Sources that consistently shape how I think about technology, capital, and systems.</p>
+    </div>
+    <div class="sources-grid">
+      <a class="source-tile" href="https://a16z.com" target="_blank">
+        <div class="source-icon" style="background:#000;color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;letter-spacing:-0.03em;">a16z</div>
+        <div><div class="source-tile-name">Andreessen Horowitz</div><div class="source-tile-type">Venture Capital · Essays & Podcast</div></div>
+        <div class="source-tile-arrow">a16z.com →</div>
+      </a>
+      <a class="source-tile" href="https://stratechery.com" target="_blank">
+        <div class="source-icon" style="background:#1a1814;color:#f0ede6;font-family:'Lora',serif;font-size:15px;font-style:italic;font-weight:500;">S</div>
+        <div><div class="source-tile-name">Stratechery</div><div class="source-tile-type">Technology Strategy · Newsletter</div></div>
+        <div class="source-tile-arrow">stratechery.com →</div>
+      </a>
+      <a class="source-tile" href="https://www.datacenterdynamics.com" target="_blank">
+        <div class="source-icon" style="background:#1e3a5f;color:#fff;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.02em;text-align:center;line-height:1.2;">DCD</div>
+        <div><div class="source-tile-name">Data Center Dynamics</div><div class="source-tile-type">Infrastructure · Trade Publication</div></div>
+        <div class="source-tile-arrow">datacenterdynamics.com →</div>
+      </a>
+      <a class="source-tile" href="https://www.deeplearning.ai" target="_blank">
+        <div class="source-icon" style="background:#e74c3c;color:#fff;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.02em;text-align:center;line-height:1.2;">DL.AI</div>
+        <div><div class="source-tile-name">Andrew Ng — DeepLearning.AI</div><div class="source-tile-type">Machine Learning · Education</div></div>
+        <div class="source-tile-arrow">deeplearning.ai →</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="page" id="page-about">
+  <div class="outer">
+    <div class="about-grid">
+      <div>
+        <div id="about-bio" class="about-bio">
+          <p>Hi, I'm Tina Chen (陈倩) — an <strong>investment professional</strong> with <strong>7+ years</strong> across private equity, investment banking, and equity research.</p>
+          <p>My career has spanned <strong>Warburg Pincus</strong>, <strong>Goldman Sachs</strong>, and <strong>Morgan Stanley</strong>, with a focus on <strong>Asia digital infrastructure</strong> and <strong>fintech</strong>. I've worked on deals ranging from a <strong>US$470M data center investment</strong> in China to pan-Asia platform scaling for a <strong>1GW hyperscaler network</strong>.</p>
+          <p>I'm drawn to the intersection of <strong>physical infrastructure and AI</strong> — the data centers, power grids, and capital structures that make intelligence at scale possible. I write to clarify my own thinking, and occasionally to share what I find.</p>
+          <p>Outside of work, I paint in <strong>oils</strong> and am deeply interested in <strong>sociology</strong> (社会学) and <strong>anthropology</strong> (人类学). I studied <strong>Economics & Finance</strong> with a minor in <strong>Art History</strong> at the University of Hong Kong, and spent time at Wellesley College.</p>
+        </div>
+        <div class="about-section">
+          <div class="about-section-title">Experience</div>
+          <div class="exp-row"><div class="exp-top"><span class="exp-role">Senior Associate</span><span class="exp-period">2021 – 2025</span></div><div class="exp-org">Warburg Pincus · Private Equity · Shanghai</div><div class="exp-desc">Led deal execution on a US$470M data center investment (Bohao) and supported pan-Asia platform scaling for Princeton Digital Group ($3B+ capital initiatives). Covered AI infrastructure, GPU/CPU leasing, and hyperscaler capex dynamics. Managed portfolio oversight, restructuring, and exit initiatives across China exit-stage investments.</div></div>
+          <div class="exp-row"><div class="exp-top"><span class="exp-role">Analyst → Associate</span><span class="exp-period">2018 – 2021</span></div><div class="exp-org">Goldman Sachs · Investment Banking · Hong Kong</div><div class="exp-desc">Executed IPO and M&A mandates across Asia fintech and insurance. Key transactions include IPO of Lexin Fintech (Nasdaq), IPO of FWD Insurance (HKEx), AIA's proposed acquisition of Union Life Insurance, and a US$1B sale of stake in Taikang Insurance to Allianz.</div></div>
+          <div class="exp-row"><div class="exp-top"><span class="exp-role">Summer Analyst</span><span class="exp-period">2017</span></div><div class="exp-org">Morgan Stanley · Equity Research · Hong Kong</div><div class="exp-desc">Supported initiation coverage of Qudian (NYSE: QD); assisted with investor inquiries across China Financials and Fintech coverage.</div></div>
+          <div class="exp-row"><div class="exp-top"><span class="exp-role">Part-time Analyst</span><span class="exp-period">2017</span></div><div class="exp-org">Petrel Capital · Hedge Fund · Hong Kong</div><div class="exp-desc">Developed investment memos and pitched long/short ideas across Consumer, Auto, TMT, and Real Estate sectors.</div></div>
+          <div class="exp-row"><div class="exp-top"><span class="exp-role">Summer Analyst</span><span class="exp-period">2016</span></div><div class="exp-org">Bank of China International · Investment Banking · Hong Kong</div><div class="exp-desc">Contributed to FIG M&A and IPO transactions: valuation analysis, financial modeling, and industry research.</div></div>
+          <div class="exp-row"><div class="exp-top"><span class="exp-role">Summer Analyst</span><span class="exp-period">2015</span></div><div class="exp-org">Citibank · Financial Planning & Analysis · Hong Kong</div></div>
+        </div>
+        <div class="about-section">
+          <div class="about-section-title">Education</div>
+          <div class="exp-row"><div class="exp-top"><span class="exp-role">BEcon&Fin, Minor in Art History</span><span class="exp-period">2013 – 2018</span></div><div class="exp-org">The University of Hong Kong</div><div class="exp-desc">First Class Honours · Major GPA 3.9, CGPA 3.8 · Dean's List · Soong Ching Ling Scholarship (RMB 200,000) · Top 0.1% in 2013 National College Entrance Exam (Beijing)</div></div>
+          <div class="exp-row"><div class="exp-top"><span class="exp-role">Exchange Program</span><span class="exp-period">2015</span></div><div class="exp-org">Wellesley College · Boston</div></div>
+        </div>
+        <div class="about-section">
+          <div class="about-section-title">Skills & Interests</div>
+          <div class="skills-row"><strong>Languages</strong> &nbsp; Mandarin (native) · English (professional) · Cantonese</div>
+          <div class="skills-row"><strong>Interests</strong> &nbsp; Oil Painting · Sociology (社会学) · Anthropology (人类学)</div>
+        </div>
+        <div class="about-section" style="margin-bottom:0">
+          <div class="about-section-title">Contact</div>
+          <ul class="about-contact">
+            <li><span class="contact-key">Email</span><span class="contact-val">tina@example.com</span></li>
+            <li><span class="contact-key">Phone</span><span class="contact-val">+86 1352-299-1893</span></li>
+            <li><span class="contact-key">Location</span><span class="contact-val">Shanghai</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="f-name">Tina Chen</span>
+  <span class="f-copy" id="footer-copy"></span>
+</footer>
+
+<script>
+  // ==================== PASSWORD ====================
+  // Change this to your own password
+  const ADMIN_PASSWORD = "tina2025";
+
+  // ==================== STATE ====================
+  let data = JSON.parse(localStorage.getItem('tinaData') || 'null') || {
+    articles: [
+      { id: 1, category: "Quick note", tag: "AI", title: "Add your first quick note here", desc: "A short observation, pattern, or connection you noticed", date: "—" },
+      { id: 2, category: "Sector study", tag: "Deep Tech", title: "AI Infrastructure: Mapping the full stack", desc: "From chip design to the application layer — where does value accumulate?", date: "—" },
+      { id: 3, category: "Company study", tag: "Analysis", title: "Reading a hyperscaler's capex cycle", desc: "What datacenter buildout numbers signal about enterprise AI timelines", date: "—" }
+    ],
+    photos: [],
+    paintings: []
+  };
+
+  // image uploads replaced with filename-based approach
+  let pendingPaintingDataURL = null;
+  let isLoggedIn = false;
+
+  function save() { localStorage.setItem('tinaData', JSON.stringify(data)); }
+
+  // ==================== AUTH ====================
+  function openAdminGate() {
+    if (isLoggedIn) { openAdmin(); return; }
+    document.getElementById('loginModal').classList.add('open');
+    document.getElementById('adminPassword').value = '';
+    document.getElementById('loginError').style.display = 'none';
+    setTimeout(() => document.getElementById('adminPassword').focus(), 100);
+  }
+  function doLogin() {
+    const pw = document.getElementById('adminPassword').value;
+    if (pw === ADMIN_PASSWORD) {
+      isLoggedIn = true;
+      document.getElementById('loginModal').classList.remove('open');
+      openAdmin();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+    }
+  }
+  function closeLogin() { document.getElementById('loginModal').classList.remove('open'); }
+
+  // ==================== PAGE NAV ====================
+  const pageIds = ["home","research","art","sources","about","article"];
+
+
+  function editArticle(id) {
+    const a = data.articles.find(x => x.id === id);
+    if (!a) return;
+    document.getElementById('art-category').value = a.category;
+    document.getElementById('art-tag').value = a.tag || '';
+    document.getElementById('art-title').value = a.title;
+    document.getElementById('art-desc').value = a.desc || '';
+    document.getElementById('art-content').value = a.content || '';
+    document.getElementById('art-date').value = a.date || '';
+    // Remove old entry so saving replaces it
+    data.articles = data.articles.filter(x => x.id !== id);
+    save();
+    renderAdminLists();
+    // Scroll form into view
+    document.getElementById('art-title').scrollIntoView({behavior:'smooth', block:'center'});
+    showToast('Article loaded — edit and click Add Article to save.');
+  }
+  function openArticle(id) {
+    const a = data.articles.find(x => x.id === id);
+    if (!a) return;
+    document.getElementById('article-detail-category').textContent = a.category;
+    document.getElementById('article-detail-title').textContent = a.title;
+    document.getElementById('article-detail-desc').textContent = a.desc || '';
+    document.getElementById('article-detail-tag').textContent = a.tag || '';
+    document.getElementById('article-detail-date').textContent = a.date || '';
+    const body = document.getElementById('article-detail-body');
+    if (a.content && a.content.trim()) {
+      // Split by double newlines into paragraphs
+      const paras = a.content.trim().split(/\n\s*\n/);
+      body.innerHTML = paras.map(p => `<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
+    } else {
+      body.innerHTML = '<p class="article-empty">No content yet — edit this article in the Manage panel to add your full text.</p>';
+    }
+    showPage('article');
+  }
+  function showPage(id) {
+    pageIds.forEach(p => document.getElementById("page-"+p).classList.remove("active"));
+    ["research","art","sources","about"].forEach(n => { const el = document.getElementById("nav-"+n); if(el) el.classList.remove("active"); });
+    document.getElementById("page-"+id).classList.add("active");
+    if(id !== "home") { const el = document.getElementById("nav-"+id); if(el) el.classList.add("active"); }
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+  function goSection(id, el) {
+    const parent = el.closest('.sidebar-links');
+    parent.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+    el.classList.add('active');
+    const target = document.getElementById(id);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ==================== RENDER ====================
+  function renderAll() {
+    renderNotes();
+    renderPhotos();
+    renderPaintings();
+    renderHomePreview();
+    renderAdminLists();
+    renderProfilePhoto();
+    renderTexts();
+  }
+
+  function renderNotes() {
+    const cats = { "Quick note": "notes-quick", "Sector study": "notes-sector", "Company study": "notes-company" };
+    Object.values(cats).forEach(id => { document.getElementById(id).innerHTML = ''; });
+    data.articles.forEach(a => {
+      const listId = cats[a.category] || 'notes-quick';
+      const li = document.createElement('li');
+      li.className = 'note-item';
+      li.style.cursor = 'pointer';
+      li.innerHTML = `<span class="note-title"><span class="note-tag-inline">${a.tag}</span>${a.title}<span class="note-desc">${a.desc}</span></span><span class="note-date">${a.date}</span>`;
+      li.addEventListener('click', () => openArticle(a.id));
+      document.getElementById(listId).appendChild(li);
+    });
+  }
+
+  function renderPhotos() {
+    const grid = document.getElementById('photos-grid');
+    grid.innerHTML = '';
+    if (data.photos.length === 0) {
+      grid.innerHTML = '<div style="grid-column:1/-1;padding:40px 0;text-align:center;font-size:13px;color:var(--muted);">No photos yet — click <strong>✏︎ Manage</strong> to upload.</div>';
+      return;
+    }
+    data.photos.forEach(p => {
+      const cell = document.createElement('div');
+      cell.className = 'art-cell' + (p.layout ? ' ' + p.layout : '');
+      const displaySrc = p.previewSrc || p.src; cell.innerHTML = `<div class="art-cell-inner"><img src="${displaySrc}" alt="${p.title}" onerror="this.parentElement.innerHTML='<span style=\"font-size:11px;color:var(--muted);padding:8px;display:block;\">${p.src}</span>'"></div><div class="art-caption"><div class="art-caption-title">${p.title}</div><div class="art-caption-meta">${p.caption}</div></div>`;
+      grid.appendChild(cell);
+    });
+  }
+
+  function renderPaintings() {
+    const grid = document.getElementById('paintings-grid');
+    grid.innerHTML = '';
+    if (data.paintings.length === 0) {
+      const fallbacks = ['p1','p2','p3','p4'];
+      fallbacks.forEach((cls, i) => {
+        const cell = document.createElement('div');
+        cell.className = 'art-cell tall ' + cls;
+        cell.innerHTML = `<div class="art-cell-inner"><span class="art-placeholder-label">Upload painting</span></div><div class="art-caption"><div class="art-caption-title">Painting title</div><div class="art-caption-meta">Oil on canvas · Year</div></div>`;
+        grid.appendChild(cell);
+      });
+      return;
+    }
+    data.paintings.forEach(p => {
+      const cell = document.createElement('div');
+      cell.className = 'art-cell' + (p.layout ? ' ' + p.layout : '');
+      const displaySrc2 = p.previewSrc || p.src; cell.innerHTML = `<div class="art-cell-inner"><img src="${displaySrc2}" alt="${p.title}" onerror="this.parentElement.innerHTML='<span style=\"font-size:11px;color:var(--muted);padding:8px;display:block;\">${p.src}</span>'"></div><div class="art-caption"><div class="art-caption-title">${p.title}</div><div class="art-caption-meta">${p.caption}</div></div>`;
+      grid.appendChild(cell);
+    });
+  }
+
+  function renderHomePreview() {
+    // Recent research (last 3)
+    const rr = document.getElementById('home-recent-research');
+    rr.innerHTML = '';
+    const recent = data.articles.slice(-3).reverse();
+    recent.forEach(a => {
+      const div = document.createElement('div');
+      div.className = 'home-note-row';
+      div.addEventListener('click', () => openArticle(a.id));
+      div.innerHTML = `<span class="row-tag">${a.category}</span><span class="row-title">${a.title}<span class="row-sub">${a.desc}</span></span><span class="row-date">${a.date}</span>`;
+      rr.appendChild(div);
+    });
+
+    // Recent art (last 4)
+    const ra = document.getElementById('home-recent-art');
+    ra.innerHTML = '';
+    const allArt = [...data.photos, ...data.paintings].slice(-4);
+    if (allArt.length === 0) {
+      ['#e6d9c4,#c8b898','#d8cdb8,#b0976c','#d4c4a8,#c8b080','#e2d4b8,#d0b888'].forEach(g => {
+        const d2 = document.createElement('div');
+        d2.style.cssText = `aspect-ratio:1;background:linear-gradient(135deg,${g});cursor:pointer;`;
+        d2.setAttribute('onclick', "showPage('art')");
+        ra.appendChild(d2);
+      });
+    } else {
+      allArt.forEach(item => {
+        const d2 = document.createElement('div');
+        d2.style.cssText = 'aspect-ratio:1;overflow:hidden;cursor:pointer;';
+        d2.setAttribute('onclick', "showPage('art')");
+        d2.innerHTML = `<img src="${item.src}" style="width:100%;height:100%;object-fit:cover;" alt="${item.title}">`;
+        ra.appendChild(d2);
+      });
+    }
+  }
+
+  function renderAdminLists() {
+    // Articles
+    const al = document.getElementById('admin-articles-list');
+    al.innerHTML = '';
+    data.articles.forEach(a => {
+      const div = document.createElement('div');
+      div.className = 'admin-item';
+      const hasContent = a.content && a.content.trim().length > 0;
+      div.innerHTML = `<div class="admin-item-thumb-placeholder">📝</div><div class="admin-item-info"><div class="admin-item-title">${a.title}</div><div class="admin-item-meta">${a.category} · ${a.date} ${hasContent ? '· <span style="color:#2e7d32;">✓ has content</span>' : '· <span style="color:var(--muted);">no content yet</span>'}</div></div><div class="admin-item-actions"><button class="btn-secondary" onclick="editArticle(${a.id})" style="margin-right:4px;">Edit</button><button class="btn-danger" onclick="deleteArticle(${a.id})">Delete</button></div>`;
+      al.appendChild(div);
+    });
+    if (data.articles.length === 0) al.innerHTML = '<p style="font-size:13px;color:var(--muted);padding:12px 0;">No articles yet.</p>';
+
+    // Photos
+    const pl = document.getElementById('admin-photos-list');
+    pl.innerHTML = '';
+    data.photos.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'admin-item';
+      div.innerHTML = `<img class="admin-item-thumb" src="${p.src}" alt="${p.title}"><div class="admin-item-info"><div class="admin-item-title">${p.title}</div><div class="admin-item-meta">${p.caption}</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(${p.id})">Delete</button></div>`;
+      pl.appendChild(div);
+    });
+    if (data.photos.length === 0) pl.innerHTML = '<p style="font-size:13px;color:var(--muted);padding:12px 0;">No photos yet.</p>';
+
+    // Paintings
+    const ptl = document.getElementById('admin-paintings-list');
+    ptl.innerHTML = '';
+    data.paintings.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'admin-item';
+      div.innerHTML = `<img class="admin-item-thumb" src="${p.src}" alt="${p.title}"><div class="admin-item-info"><div class="admin-item-title">${p.title}</div><div class="admin-item-meta">${p.caption}</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(${p.id})">Delete</button></div>`;
+      ptl.appendChild(div);
+    });
+    if (data.paintings.length === 0) ptl.innerHTML = '<p style="font-size:13px;color:var(--muted);padding:12px 0;">No paintings yet.</p>';
+  }
+
+  // ==================== ADMIN OPEN/CLOSE ====================
+  function openAdmin() {
+    document.getElementById('adminOverlay').classList.add('open');
+    renderAdminLists();
+  }
+  function closeAdmin() { document.getElementById('adminOverlay').classList.remove('open'); }
+  function handleOverlayClick(e) { if (e.target === document.getElementById('adminOverlay')) closeAdmin(); }
+
+  function switchTab(tabId, el) {
+    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.admin-pane').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+    if (tabId === 'tab-edit') populateEditTab();
+  }
+
+  // ==================== ARTICLES ====================
+  function addArticle() {
+    const title = document.getElementById('art-title').value.trim();
+    if (!title) { showToast('Please enter a title.'); return; }
+    const article = {
+      id: Date.now(),
+      category: document.getElementById('art-category').value,
+      tag: document.getElementById('art-tag').value.trim() || 'Note',
+      title,
+      desc: document.getElementById('art-desc').value.trim(),
+      content: document.getElementById('art-content').value.trim(),
+      date: document.getElementById('art-date').value.trim() || '—'
+    };
+    data.articles.push(article);
+    save();
+    renderAll();
+    // Reset
+    ['art-title','art-desc','art-date','art-tag','art-content'].forEach(id => document.getElementById(id).value = '');
+    showToast('Article added!');
+  }
+  function deleteArticle(id) {
+    data.articles = data.articles.filter(a => a.id !== id);
+    save(); renderAll();
+    showToast('Article deleted.');
+  }
+
+  // ==================== PHOTOS ====================
+  function addPhoto() {
+    const filename = document.getElementById('photo-filename').value.trim();
+    if (!filename) { showToast('Please enter an image filename.'); return; }
+    const previewUrl = document.getElementById('photo-preview-url').value.trim();
+    const photo = {
+      id: Date.now(),
+      src: 'images/' + filename,
+      previewSrc: previewUrl || '',
+      title: document.getElementById('photo-title').value.trim() || 'Untitled',
+      caption: document.getElementById('photo-caption').value.trim() || '',
+      layout: document.getElementById('photo-layout').value
+    };
+    data.photos.push(photo);
+    save(); renderAll();
+    ['photo-filename','photo-preview-url','photo-title','photo-caption'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('photo-layout').value = '';
+    document.getElementById('photo-preview-box').style.display = 'none';
+    showToast('Photo added!');
+  }
+  function deletePhoto(id) {
+    data.photos = data.photos.filter(p => p.id !== id);
+    save(); renderAll();
+    showToast('Photo deleted.');
+  }
+
+  // ==================== PAINTINGS ====================
+  function addPainting() {
+    const filename = document.getElementById('painting-filename').value.trim();
+    if (!filename) { showToast('Please enter an image filename.'); return; }
+    const previewUrl = document.getElementById('painting-preview-url').value.trim();
+    const painting = {
+      id: Date.now(),
+      src: 'images/' + filename,
+      previewSrc: previewUrl || '',
+      title: document.getElementById('painting-title').value.trim() || 'Untitled',
+      caption: document.getElementById('painting-caption').value.trim() || 'Oil on canvas',
+      layout: document.getElementById('painting-layout').value
+    };
+    data.paintings.push(painting);
+    save(); renderAll();
+    ['painting-filename','painting-preview-url','painting-title','painting-caption'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('painting-layout').value = '';
+    document.getElementById('painting-preview-box').style.display = 'none';
+    showToast('Painting added!');
+  }
+  function deletePainting(id) {
+    data.paintings = data.paintings.filter(p => p.id !== id);
+    save(); renderAll();
+    showToast('Painting deleted.');
+  }
+
+  // (image upload replaced with filename-based approach — no base64/localStorage bloat)
+
+
+  // ==================== PROFILE PHOTO ====================
+  function renderProfilePhoto() {
+    const src = data.profilePhotoPreview || data.profilePhoto || '';
+    const img = document.getElementById('profilePhotoEl');
+    const placeholder = document.getElementById('profilePhotoPlaceholder');
+    if (src) {
+      img.src = src;
+      img.style.display = 'block';
+      placeholder.style.display = 'none';
+    } else {
+      img.style.display = 'none';
+      placeholder.style.display = 'flex';
+    }
+  }
+
+  function saveProfilePhoto() {
+    const filename = document.getElementById('profile-filename').value.trim();
+    if (!filename) { showToast('Please enter a filename.'); return; }
+    const previewUrl = document.getElementById('profile-preview-url').value.trim();
+    data.profilePhoto = 'images/' + filename;
+    data.profilePhotoPreview = previewUrl || '';
+    save();
+    renderProfilePhoto();
+    showToast('Profile photo updated!');
+  }
+
+  function removeProfilePhoto() {
+    data.profilePhoto = '';
+    save();
+    renderProfilePhoto();
+    showToast('Profile photo removed.');
+  }
+
+  // ==================== EXPORT FOR GITHUB ====================
+  function exportForGitHub() {
+    // Get the current page HTML and inject the live data into it
+    const currentHTML = document.documentElement.outerHTML;
+
+    // We need to replace the DEFAULT_DATA constant with the current data
+    const exportData = JSON.stringify(data);
+    const exported = currentHTML.replace(
+      /const DEFAULT_DATA = \{[\s\S]*?\};/,
+      'const DEFAULT_DATA = ' + exportData + ';'
+    );
+
+    const blob = new Blob([exported], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'index.html';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Downloaded index.html — ready for GitHub!');
+  }
+  // ==================== TEXTS ====================
+  function renderTexts() {
+    const t = data.texts || {};
+    const el = (id, val) => { const e = document.getElementById(id); if (e) e.textContent = val || ''; };
+    const elHTML = (id, val) => { const e = document.getElementById(id); if (e) e.innerHTML = val || ''; };
+    if (t.headline) el('hero-headline', t.headline);
+    if (t.bio) el('hero-bio', t.bio);
+    if (t.tagline) el('hero-tagline', t.tagline);
+    if (t.metaBg) el('hero-meta-bg', t.metaBg);
+    if (t.metaFocus) el('hero-meta-focus', t.metaFocus);
+    if (t.metaBased) el('hero-meta-based', t.metaBased);
+    if (t.researchSub) el('research-subtitle', t.researchSub);
+    if (t.aboutBio) el('about-bio', t.aboutBio);
+  }
+
+  function populateEditTab() {
+    const t = data.texts || {};
+    const setVal = (id, val) => { const e = document.getElementById(id); if (e) e.value = val || ''; };
+    setVal('edit-headline', t.headline);
+    setVal('edit-bio', t.bio);
+    setVal('edit-tagline', t.tagline);
+    setVal('edit-meta-bg', t.metaBg);
+    setVal('edit-meta-focus', t.metaFocus);
+    setVal('edit-meta-based', t.metaBased);
+    setVal('edit-research-sub', t.researchSub);
+    setVal('edit-about-bio', t.aboutBio);
+  }
+
+  function saveTexts() {
+    data.texts = {
+      headline: document.getElementById('edit-headline').value.trim() || data.texts.headline,
+      bio: document.getElementById('edit-bio').value.trim() || data.texts.bio,
+      tagline: document.getElementById('edit-tagline').value.trim() || data.texts.tagline,
+      metaBg: document.getElementById('edit-meta-bg').value.trim() || data.texts.metaBg,
+      metaFocus: document.getElementById('edit-meta-focus').value.trim() || data.texts.metaFocus,
+      metaBased: document.getElementById('edit-meta-based').value.trim() || data.texts.metaBased,
+      researchSub: document.getElementById('edit-research-sub').value.trim() || data.texts.researchSub,
+      aboutBio: document.getElementById('edit-about-bio').value.trim() || data.texts.aboutBio,
+    };
+    save();
+    renderTexts();
+    showToast('Text changes saved!');
+  }
+
+  // ==================== TOAST ====================
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+
+  // ==================== LIVE URL PREVIEW ====================
+  function setupPreviewListeners() {
+    const pairs = [
+      ['photo-preview-url', 'photoPreviewImg', 'photo-preview-box'],
+      ['painting-preview-url', 'paintingPreviewImg', 'painting-preview-box'],
+      ['profile-preview-url', 'profilePreviewImg', 'profile-preview-box'],
+    ];
+    pairs.forEach(([inputId, imgId, boxId]) => {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      input.addEventListener('input', () => {
+        const url = input.value.trim();
+        const box = document.getElementById(boxId);
+        const img = document.getElementById(imgId);
+        if (url) { img.src = url; box.style.display = 'block'; }
+        else { box.style.display = 'none'; img.src = ''; }
+      });
+    });
+  }
+  setupPreviewListeners();
+  // ==================== INIT ====================
+  document.getElementById("footer-copy").textContent = "\u00a9 " + new Date().getFullYear();
+  renderAll();
+</script>
+</body>
+</html>
