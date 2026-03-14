@@ -744,7 +744,7 @@
     <span class="topnav-logo" onclick="showPage('home')">Tina Chen</span>
     <a onclick="showPage('research')" id="nav-research">Research Notes</a>
     <a onclick="showPage('aiprojects')" id="nav-aiprojects" class="">AI Projects</a>
-    <a onclick="showPage('art')" id="nav-art" class="active">Artworks</a>
+    <a onclick="showPage('art')" id="nav-art" >Artworks</a>
     <a onclick="showPage('sources')" id="nav-sources">Reading List</a>
     <a onclick="showPage('about')" id="nav-about">About</a>
     <span class="topnav-spacer"></span>
@@ -1029,7 +1029,9 @@
   const ADMIN_PASSWORD = "tina2025";
 
   // ==================== STATE ====================
-  let data = JSON.parse(localStorage.getItem('tinaData') || 'null') || {
+  // DEFAULT_DATA is the source of truth baked in at export time.
+  // localStorage is only used to persist NEW additions made after export.
+  const DEFAULT_DATA = {
     articles: [
       { id: 1, category: "Quick note", tag: "AI", title: "Add your first quick note here", desc: "A short observation, pattern, or connection you noticed", date: "—" },
       { id: 2, category: "Sector study", tag: "Deep Tech", title: "AI Infrastructure: Mapping the full stack", desc: "From chip design to the application layer — where does value accumulate?", date: "—" },
@@ -1050,6 +1052,26 @@
       { id: 1, title: "Personal Website", desc: "Built entirely through vibe coding with Claude — no manual HTML written.", url: "https://github.com", tools: "Claude" }
     ]
   };
+
+  // Merge: always use DEFAULT_DATA for photos/paintings/profile (baked at export).
+  // For articles/milestones/projects, use localStorage additions on top of defaults.
+  function loadData() {
+    const stored = JSON.parse(localStorage.getItem('tinaData') || 'null');
+    if (!stored) return JSON.parse(JSON.stringify(DEFAULT_DATA));
+    // Photos and paintings: always trust baked DEFAULT_DATA (not localStorage)
+    // so images always reflect what was exported
+    return {
+      articles: stored.articles || DEFAULT_DATA.articles,
+      photos: DEFAULT_DATA.photos,
+      paintings: DEFAULT_DATA.paintings,
+      profilePhoto: DEFAULT_DATA.profilePhoto || stored.profilePhoto || '',
+      profilePhotoPreview: DEFAULT_DATA.profilePhotoPreview || stored.profilePhotoPreview || '',
+      aiMilestones: stored.aiMilestones || DEFAULT_DATA.aiMilestones,
+      aiProjects: stored.aiProjects || DEFAULT_DATA.aiProjects,
+      texts: stored.texts || DEFAULT_DATA.texts || {}
+    };
+  }
+  let data = loadData();
 
   // image uploads replaced with filename-based approach
   let pendingPaintingDataURL = null;
@@ -1608,10 +1630,10 @@
     // Get the current page HTML and inject the live data into it
     const currentHTML = document.documentElement.outerHTML;
 
-    // We need to replace the DEFAULT_DATA constant with the current data
-    const exportData = JSON.stringify(data);
+    // Replace DEFAULT_DATA with current live data so export is always up to date
+    const exportData = JSON.stringify(data, null, 2);
     const exported = currentHTML.replace(
-      /const DEFAULT_DATA = \{[\s\S]*?\};/,
+      /const DEFAULT_DATA = \{[\s\S]*?\};(?=\s*\/\/ Merge)/,
       'const DEFAULT_DATA = ' + exportData + ';'
     );
 
