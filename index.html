@@ -104,10 +104,11 @@
   /* ART */
   .art-section-label { font-family: var(--serif); font-size: 1.05rem; font-style: italic; font-weight: 500; margin: 36px 0 12px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
   .art-section-label:first-of-type { margin-top: 0; }
-  .art-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+  .art-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; grid-auto-rows: 220px; }
   .art-grid.paintings { grid-template-columns: repeat(3, 1fr); }
-  .art-cell { background: var(--bg2); aspect-ratio: 4/3; position: relative; overflow: hidden; cursor: pointer; }
-  .art-cell.tall { aspect-ratio: 3/4; }
+  .art-cell { background: var(--bg2); position: relative; overflow: hidden; cursor: pointer; }
+  .art-cell.tall { grid-row: span 2; }
+  .art-cell.wide { grid-column: span 2; }
   .art-cell-inner { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transition: transform 0.4s ease; }
   .art-cell:hover .art-cell-inner { transform: scale(1.04); }
   .art-cell-inner img { width: 100%; height: 100%; object-fit: cover; }
@@ -371,7 +372,24 @@
   .admin-item {
     display: flex; align-items: flex-start; gap: 12px;
     padding: 12px 0; border-bottom: 1px solid var(--rule);
+    transition: background 0.12s;
   }
+  .admin-item.dragging { opacity: 0.4; background: var(--bg2); }
+  .admin-item.drag-over-top { border-top: 2px solid var(--accent); }
+  .admin-item.drag-over-bottom { border-bottom: 2px solid var(--accent); }
+  .drag-handle {
+    cursor: grab; color: var(--muted); font-size: 14px; padding: 2px 4px;
+    flex-shrink: 0; user-select: none; align-self: center; opacity: 0.5;
+  }
+  .drag-handle:hover { opacity: 1; }
+  .drag-handle:active { cursor: grabbing; }
+  .btn-edit {
+    background: transparent; color: var(--muted); border: 1px solid var(--rule); border-radius: 4px;
+    font-family: var(--sans); font-size: 12px;
+    padding: 5px 12px; cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .btn-edit:hover { color: var(--ink); border-color: var(--ink); }
   .admin-item-thumb { width: 48px; height: 48px; object-fit: cover; border-radius: 3px; flex-shrink: 0; background: var(--bg2); }
   .admin-item-thumb-placeholder { width: 48px; height: 48px; border-radius: 3px; flex-shrink: 0; background: var(--bg2); display: flex; align-items: center; justify-content: center; font-size: 18px; }
   .admin-item-info { flex: 1; min-width: 0; }
@@ -538,8 +556,9 @@
         <div class="field">
           <label>Layout</label>
           <select id="photo-layout">
-            <option value="">Regular (4:3)</option>
-            <option value="tall">Tall (3:4)</option>
+            <option value="">Regular</option>
+            <option value="wide">Wide (2 cols)</option>
+            <option value="tall">Tall (2 rows)</option>
           </select>
         </div>
       </div>
@@ -579,8 +598,9 @@
         <div class="field">
           <label>Layout</label>
           <select id="painting-layout">
-            <option value="">Regular (4:3)</option>
-            <option value="tall">Tall (3:4)</option>
+            <option value="">Regular</option>
+            <option value="wide">Wide (2 cols)</option>
+            <option value="tall">Tall (2 rows)</option>
           </select>
         </div>
       </div>
@@ -990,7 +1010,7 @@
         <div class="about-section" style="margin-bottom:0">
           <div class="about-section-title">Contact</div>
           <ul class="about-contact">
-            <li><span class="contact-key">Email</span><span class="contact-val"><a href="mailto:tina.cq.2025@gmail.com">tina.cq.2025@gmail.com</a></span></li>
+            <li><span class="contact-key">Email</span><span class="contact-val"><a href="/cdn-cgi/l/email-protection#0d7964636c236e7c233f3d3f384d6a606c6461236e6260"><span class="__cf_email__" data-cfemail="d8acb1b6b9f6bba9f6eae8eaed98bfb5b9b1b4f6bbb7b5">[email&#160;protected]</span></a></span></li>
             <li><span class="contact-key">Location</span><span class="contact-val">Beijing, Shanghai</span></li>
           </ul>
         </div>
@@ -1004,7 +1024,7 @@
   <span class="f-copy" id="footer-copy">© 2026 Tina Chen</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // ==================== PASSWORD ====================
   // Change this to your own password
   const ADMIN_PASSWORD = "tina2025";
@@ -1299,6 +1319,96 @@
     showToast('Project deleted.');
   }
 
+  // ==================== EDIT FUNCTIONS ====================
+  function editPhoto(id) {
+    const p = data.photos.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('photo-filename').value = p.src.replace('images/','');
+    document.getElementById('photo-preview-url').value = p.previewSrc || '';
+    document.getElementById('photo-title').value = p.title || '';
+    document.getElementById('photo-caption').value = p.caption || '';
+    document.getElementById('photo-layout').value = p.layout || '';
+    data.photos = data.photos.filter(x => x.id !== id);
+    save(); renderAll();
+    document.getElementById('photo-filename').scrollIntoView({behavior:'smooth',block:'center'});
+    showToast('Photo loaded — edit and click Add Photo to save.');
+  }
+
+  function editPainting(id) {
+    const p = data.paintings.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('painting-filename').value = p.src.replace('images/','');
+    document.getElementById('painting-preview-url').value = p.previewSrc || '';
+    document.getElementById('painting-title').value = p.title || '';
+    document.getElementById('painting-caption').value = p.caption || '';
+    document.getElementById('painting-layout').value = p.layout || '';
+    data.paintings = data.paintings.filter(x => x.id !== id);
+    save(); renderAll();
+    document.getElementById('painting-filename').scrollIntoView({behavior:'smooth',block:'center'});
+    showToast('Painting loaded — edit and click Add Painting to save.');
+  }
+
+  function editMilestone(id) {
+    const m = data.aiMilestones.find(x => x.id === id);
+    if (!m) return;
+    document.getElementById('milestone-type').value = m.type;
+    document.getElementById('milestone-title').value = m.title;
+    document.getElementById('milestone-date').value = m.date;
+    data.aiMilestones = data.aiMilestones.filter(x => x.id !== id);
+    save(); renderAll();
+    document.getElementById('milestone-title').scrollIntoView({behavior:'smooth',block:'center'});
+    showToast('Milestone loaded — edit and click Add Milestone to save.');
+  }
+
+  // ==================== DRAG TO REORDER ====================
+  let dragSrcId = null;
+  let dragSrcType = null;
+
+  function makeDraggable(el, id, type) {
+    el.setAttribute('draggable', true);
+    el.dataset.id = id;
+    el.dataset.type = type;
+    el.addEventListener('dragstart', e => {
+      dragSrcId = id; dragSrcType = type;
+      el.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    el.addEventListener('dragend', () => {
+      el.classList.remove('dragging');
+      document.querySelectorAll('.admin-item').forEach(i => {
+        i.classList.remove('drag-over-top','drag-over-bottom');
+      });
+    });
+    el.addEventListener('dragover', e => {
+      e.preventDefault();
+      if (String(el.dataset.id) === String(dragSrcId)) return;
+      document.querySelectorAll('.admin-item').forEach(i => i.classList.remove('drag-over-top','drag-over-bottom'));
+      const rect = el.getBoundingClientRect();
+      const mid = rect.top + rect.height / 2;
+      el.classList.add(e.clientY < mid ? 'drag-over-top' : 'drag-over-bottom');
+    });
+    el.addEventListener('dragleave', () => {
+      el.classList.remove('drag-over-top','drag-over-bottom');
+    });
+    el.addEventListener('drop', e => {
+      e.preventDefault();
+      if (String(el.dataset.id) === String(dragSrcId)) return;
+      const rect = el.getBoundingClientRect();
+      const mid = rect.top + rect.height / 2;
+      const insertBefore = e.clientY < mid;
+      const arr = dragSrcType === 'photo' ? data.photos
+                : dragSrcType === 'painting' ? data.paintings
+                : data.aiMilestones;
+      const srcIdx = arr.findIndex(x => String(x.id) === String(dragSrcId));
+      const tgtIdx = arr.findIndex(x => String(x.id) === String(el.dataset.id));
+      if (srcIdx === -1 || tgtIdx === -1) return;
+      const [item] = arr.splice(srcIdx, 1);
+      const newIdx = arr.findIndex(x => String(x.id) === String(el.dataset.id));
+      arr.splice(insertBefore ? newIdx : newIdx + 1, 0, item);
+      save(); renderAll();
+    });
+  }
+
   function renderAdminLists() {
     // Articles
     const al = document.getElementById('admin-articles-list');
@@ -1318,7 +1428,8 @@
     data.photos.forEach(p => {
       const div = document.createElement('div');
       div.className = 'admin-item';
-      div.innerHTML = `<img class="admin-item-thumb" src="${p.src}" alt="${p.title}"><div class="admin-item-info"><div class="admin-item-title">${p.title}</div><div class="admin-item-meta">${p.caption}</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePhoto(${p.id})">Delete</button></div>`;
+      div.innerHTML = `<span class="drag-handle" title="Drag to reorder">⠿</span><img class="admin-item-thumb" src="${p.src}" alt="${p.title}"><div class="admin-item-info"><div class="admin-item-title">${p.title || '(no title)'}</div><div class="admin-item-meta">${p.caption}</div></div><div class="admin-item-actions"><button class="btn-edit" onclick="editPhoto(${p.id})">Edit</button><button class="btn-danger" onclick="deletePhoto(${p.id})">Delete</button></div>`;
+      makeDraggable(div, p.id, 'photo');
       pl.appendChild(div);
     });
     if (data.photos.length === 0) pl.innerHTML = '<p style="font-size:13px;color:var(--muted);padding:12px 0;">No photos yet.</p>';
@@ -1329,7 +1440,8 @@
     data.paintings.forEach(p => {
       const div = document.createElement('div');
       div.className = 'admin-item';
-      div.innerHTML = `<img class="admin-item-thumb" src="${p.src}" alt="${p.title}"><div class="admin-item-info"><div class="admin-item-title">${p.title}</div><div class="admin-item-meta">${p.caption}</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deletePainting(${p.id})">Delete</button></div>`;
+      div.innerHTML = `<span class="drag-handle" title="Drag to reorder">⠿</span><img class="admin-item-thumb" src="${p.src}" alt="${p.title}"><div class="admin-item-info"><div class="admin-item-title">${p.title || '(no title)'}</div><div class="admin-item-meta">${p.caption}</div></div><div class="admin-item-actions"><button class="btn-edit" onclick="editPainting(${p.id})">Edit</button><button class="btn-danger" onclick="deletePainting(${p.id})">Delete</button></div>`;
+      makeDraggable(div, p.id, 'painting');
       ptl.appendChild(div);
     });
     if (data.paintings.length === 0) ptl.innerHTML = '<p style="font-size:13px;color:var(--muted);padding:12px 0;">No paintings yet.</p>';
@@ -1341,7 +1453,8 @@
       (data.aiMilestones || []).forEach(m => {
         const div = document.createElement('div');
         div.className = 'admin-item';
-        div.innerHTML = `<div class="admin-item-info"><div class="admin-item-title">${m.type}: ${m.title}</div><div class="admin-item-meta">${m.date}</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deleteMilestone(${m.id})">Delete</button></div>`;
+        div.innerHTML = `<span class="drag-handle" title="Drag to reorder">⠿</span><div class="admin-item-info"><div class="admin-item-title">${m.type}: ${m.title}</div><div class="admin-item-meta">${m.date}</div></div><div class="admin-item-actions"><button class="btn-edit" onclick="editMilestone(${m.id})">Edit</button><button class="btn-danger" onclick="deleteMilestone(${m.id})">Delete</button></div>`;
+        makeDraggable(div, m.id, 'milestone');
         mil.appendChild(div);
       });
       if (!data.aiMilestones || data.aiMilestones.length === 0) mil.innerHTML = '<p style="font-size:13px;color:var(--muted);padding:12px 0;">No milestones yet.</p>';
@@ -1591,5 +1704,5 @@
   setupPreviewListeners();
   document.getElementById('footer-copy').textContent = '© ' + new Date().getFullYear() + ' Tina Chen';
 </script>
-
-</body></html>
+</body>
+</html>
