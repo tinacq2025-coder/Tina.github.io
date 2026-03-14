@@ -152,6 +152,133 @@
   .skills-row { font-size: 14px; line-height: 1.7; margin-bottom: 8px; }
   .skills-row strong { color: var(--ink); font-weight: 500; }
 
+
+  /* ═══ AI PROJECTS — REDESIGN ═══ */
+
+  /* Platform chips: uniform 3D pill cards */
+  .ai-platforms-section { margin-top: 52px; }
+  .ai-platform-category-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+  }
+  .ai-platform-category-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--rule);
+  }
+  .ai-chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+  .ai-chip {
+    font-family: var(--sans); font-size: 13px; font-weight: 600;
+    padding: 10px 0; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: default; letter-spacing: 0.02em;
+    width: 108px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    position: relative;
+    /* 3D raised effect */
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.55) inset,
+      0 -1px 0 rgba(0,0,0,0.18) inset,
+      0 4px 0 rgba(0,0,0,0.18),
+      0 6px 12px rgba(0,0,0,0.12);
+  }
+  .ai-chip:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.55) inset,
+      0 -1px 0 rgba(0,0,0,0.18) inset,
+      0 6px 0 rgba(0,0,0,0.18),
+      0 10px 20px rgba(0,0,0,0.16);
+  }
+  .ai-chip:active {
+    transform: translateY(2px);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.3) inset,
+      0 -1px 0 rgba(0,0,0,0.12) inset,
+      0 2px 0 rgba(0,0,0,0.18),
+      0 3px 6px rgba(0,0,0,0.10);
+  }
+  /* All LLM chips: same electric aurora blue */
+  .ai-chip.llm {
+    background: linear-gradient(135deg, #00c6ff 0%, #0072ff 50%, #7b2ff7 100%);
+    color: #fff;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.4) inset,
+      0 -1px 0 rgba(0,0,50,0.3) inset,
+      0 4px 0 rgba(0,60,180,0.5),
+      0 6px 20px rgba(0,114,255,0.25);
+  }
+  .ai-chip.llm:hover {
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.4) inset,
+      0 -1px 0 rgba(0,0,50,0.3) inset,
+      0 6px 0 rgba(0,60,180,0.5),
+      0 12px 28px rgba(0,114,255,0.4);
+  }
+  /* .top class no longer needed but kept for compatibility */
+  .ai-chip.llm.top { }
+  /* AI Apps: warm rose-to-peach gradient */
+  .ai-chip.app {
+    background: linear-gradient(135deg, #f953c6 0%, #e0456b 50%, #ff6b35 100%);
+    color: #fff;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.35) inset,
+      0 -1px 0 rgba(0,0,0,0.2) inset,
+      0 4px 0 rgba(180,30,80,0.45),
+      0 6px 18px rgba(233,69,107,0.3);
+  }
+  .ai-chip.app:hover {
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.35) inset,
+      0 -1px 0 rgba(0,0,0,0.2) inset,
+      0 6px 0 rgba(180,30,80,0.45),
+      0 12px 26px rgba(233,69,107,0.4);
+  }
+
+  /* Activity tiles: bold numbered/labeled grid */
+  .ai-done-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 20px;
+  }
+  .ai-done-tile {
+    background: var(--bg2);
+    padding: 24px 20px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    min-height: 110px;
+    transition: background 0.18s;
+    cursor: default;
+    position: relative; overflow: hidden;
+  }
+  .ai-done-tile:hover { background: #e5e0d8; }
+  .ai-done-tile:hover .ai-done-emoji { transform: scale(1.2) rotate(-5deg); }
+  .ai-done-emoji {
+    font-size: 28px; line-height: 1;
+    transition: transform 0.25s ease;
+    display: block; margin-bottom: 12px;
+  }
+  .ai-done-label {
+    font-family: var(--sans); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink);
+    line-height: 1.3;
+  }
+  .ai-done-tile::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px; background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  .ai-done-tile:hover::after { transform: scaleX(1); }
+  .milestone-entry { position: relative; margin-bottom: 28px; padding-left: 16px; }
+  .milestone-entry::before { content: ''; position: absolute; left: -7px; top: 5px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+  .milestone-type { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 3px; }
+  .milestone-title { font-size: 14px; font-weight: 500; line-height: 1.4; color: var(--ink); }
+  .milestone-date { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .project-card { background: var(--bg2); padding: 28px; display: flex; flex-direction: column; gap: 10px; transition: background 0.15s; text-decoration: none; color: inherit; }
+  .project-card:hover { background: #e0dbd2; }
+  .project-card-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 500; font-style: italic; color: var(--ink); }
+  .project-card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .project-card-tools { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+  .project-card-arrow { font-size: 13px; color: var(--accent); margin-top: auto; padding-top: 8px; }
   /* FOOTER */
   footer { border-top: 1px solid var(--rule); padding: 22px 48px; display: flex; justify-content: space-between; align-items: center; max-width: 1040px; margin: 0 auto; }
   footer .f-name { font-family: var(--serif); font-size: 14px; font-style: italic; color: var(--muted); }
@@ -343,6 +470,7 @@
       <div class="admin-tab active" onclick="switchTab('tab-articles',this)">Articles</div>
       <div class="admin-tab" onclick="switchTab('tab-photos',this)">Photos</div>
       <div class="admin-tab" onclick="switchTab('tab-paintings',this)">Paintings</div>
+      <div class="admin-tab" onclick="switchTab('tab-aiprojects',this)">AI Projects</div>
       <div class="admin-tab" onclick="switchTab('tab-profile',this)">Profile</div>
       <div class="admin-tab" onclick="switchTab('tab-edit',this)">Edit Texts</div>
     </div>
@@ -468,6 +596,60 @@
       <div class="admin-items" id="admin-paintings-list"></div>
     </div>
 
+    <!-- AI PROJECTS TAB -->
+    <div class="admin-pane" id="tab-aiprojects">
+
+      <div class="admin-section-title">Add Milestone</div>
+      <div class="field-row">
+        <div class="field">
+          <label>Type</label>
+          <select id="milestone-type">
+            <option value="Built">Built</option>
+            <option value="Installed">Installed</option>
+            <option value="Learned">Learned</option>
+            <option value="Tried">Tried</option>
+            <option value="Published">Published</option>
+            <option value="Achieved">Achieved</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Date (e.g. Mar 2025)</label>
+          <input type="text" id="milestone-date" placeholder="Mar 2025">
+        </div>
+      </div>
+      <div class="field">
+        <label>Description</label>
+        <input type="text" id="milestone-title" placeholder="What did you do?">
+      </div>
+      <button class="btn-primary" onclick="addMilestone()">Add Milestone</button>
+      <div class="admin-section-title" style="margin-top:28px;">Existing Milestones</div>
+      <div class="admin-items" id="admin-milestones-list"></div>
+
+      <div class="admin-section-title" style="margin-top:32px;">Add Project</div>
+      <div class="field">
+        <label>Project Title</label>
+        <input type="text" id="project-title" placeholder="e.g. Personal Website">
+      </div>
+      <div class="field">
+        <label>Description</label>
+        <input type="text" id="project-desc" placeholder="One line description">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>URL</label>
+          <input type="text" id="project-url" placeholder="https://...">
+        </div>
+        <div class="field">
+          <label>Tools used</label>
+          <input type="text" id="project-tools" placeholder="e.g. Claude, Cursor">
+        </div>
+      </div>
+      <button class="btn-primary" onclick="addProject()">Add Project</button>
+      <div class="admin-section-title" style="margin-top:28px;">Existing Projects</div>
+      <div class="admin-items" id="admin-projects-list"></div>
+
+    </div>
+
     <!-- PROFILE TAB -->
     <div class="admin-pane" id="tab-profile">
       <div class="admin-section-title">Profile Photo</div>
@@ -544,6 +726,7 @@
   <nav class="topnav">
     <span class="topnav-logo" onclick="showPage('home')">Tina Chen</span>
     <a onclick="showPage('research')" id="nav-research">Research Notes</a>
+    <a onclick="showPage('aiprojects')" id="nav-aiprojects">AI Projects</a>
     <a onclick="showPage('art')" id="nav-art">Artworks</a>
     <a onclick="showPage('sources')" id="nav-sources">Reading List</a>
     <a onclick="showPage('about')" id="nav-about">About</a>
@@ -637,6 +820,81 @@
       </div>
     </div>
     <div class="article-body" id="article-detail-body"></div>
+  </div>
+</div>
+
+<!-- AI PROJECTS -->
+<div class="page" id="page-aiprojects">
+  <div class="outer">
+    <div class="two-col">
+      <div class="sidebar">
+        <div class="sidebar-label">In this section</div>
+        <ul class="sidebar-links">
+          <li><a class="active" onclick="goSection('ai-timeline',this)">Learning Log</a></li>
+          <li><a onclick="goSection('ai-activities',this)">Things I've Done</a></li>
+          <li><a onclick="goSection('ai-projectlist',this)">My Projects</a></li>
+          <li><a onclick="goSection('ai-platforms',this)">Platforms Tried</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="page-header-block">
+          <h2 class="page-title">AI Projects</h2>
+          <p class="page-subtitle">Learning, building, and experimenting at the frontier.</p>
+        </div>
+
+        <!-- LEARNING LOG -->
+        <div id="ai-timeline">
+          <div class="section-group-label">Learning Log</div>
+          <div id="milestones-list" style="margin-top:16px;position:relative;padding-left:24px;border-left:2px solid var(--rule);"></div>
+        </div>
+
+        <!-- ACTIVITIES -->
+        <div id="ai-activities" style="margin-top:52px;">
+          <div class="section-group-label">Things I've Done with AI</div>
+          <div class="ai-done-grid">
+            <div class="ai-done-tile"><span class="ai-done-emoji">💬</span><span class="ai-done-label">Chats</span></div>
+            <div class="ai-done-tile"><span class="ai-done-emoji">👩‍💻</span><span class="ai-done-label">Vibe Coding</span></div>
+            <div class="ai-done-tile"><span class="ai-done-emoji">🎨</span><span class="ai-done-label">Image Gen</span></div>
+            <div class="ai-done-tile"><span class="ai-done-emoji">🎬</span><span class="ai-done-label">Video Gen</span></div>
+            <div class="ai-done-tile"><span class="ai-done-emoji">🔍</span><span class="ai-done-label">Research</span></div>
+            <div class="ai-done-tile"><span class="ai-done-emoji">🎙️</span><span class="ai-done-label">播客 Gen</span></div>
+          </div>
+        </div>
+
+        <!-- PROJECTS -->
+        <div id="ai-projectlist" style="margin-top:52px;">
+          <div class="section-group-label">My Projects</div>
+          <div id="projects-grid" style="margin-top:16px;display:grid;grid-template-columns:repeat(2,1fr);gap:2px;"></div>
+        </div>
+
+        <!-- PLATFORMS -->
+        <div id="ai-platforms" class="ai-platforms-section" style="margin-top:52px;">
+          <div class="section-group-label">Platforms &amp; Tools I've Tried</div>
+          <div style="margin-top:20px;">
+            <div class="ai-platform-category-label">LLMs</div>
+            <div class="ai-chip-row">
+              <span class="ai-chip llm top">Claude</span>
+              <span class="ai-chip llm">豆包</span>
+              <span class="ai-chip llm">GPT</span>
+              <span class="ai-chip llm">Gemini</span>
+              <span class="ai-chip llm">MiniMax</span>
+              <span class="ai-chip llm">DeepSeek</span>
+              <span class="ai-chip llm">千问</span>
+              <span class="ai-chip llm">元宝</span>
+            </div>
+            <div class="ai-platform-category-label">AI Applications</div>
+            <div class="ai-chip-row">
+              <span class="ai-chip app">Perplexity</span>
+              <span class="ai-chip app">星野</span>
+              <span class="ai-chip app">海螺</span>
+              <span class="ai-chip app">即梦</span>
+              <span class="ai-chip app">可灵</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
 </div>
 
@@ -761,7 +1019,19 @@
       { id: 3, category: "Company study", tag: "Analysis", title: "Reading a hyperscaler's capex cycle", desc: "What datacenter buildout numbers signal about enterprise AI timelines", date: "—" }
     ],
     photos: [],
-    paintings: []
+    paintings: [],
+    aiMilestones: [
+      { id: 1, type: "Built", title: "Built a farming simulation game (种田游戏) via vibe coding with Gemini", date: "Dec 2025" },
+      { id: 2, type: "Built", title: "Prototyped an Animal Crossing–style personal museum (动森风个人博物馆) via vibe coding with Gemini", date: "Dec 2025" },
+      { id: 3, type: "Installed", title: "Set up OpenClaw on Windows WSL, troubleshot with 豆包", date: "Feb 2026" },
+      { id: 6, type: "Learned", title: "Completed AI for Everyone by Andrew Ng — grounding in AI strategy and organisational impact", date: "Feb 2026" },
+      { id: 7, type: "Learned", title: "Completed Generative AI for Everyone by Andrew Ng — concepts, tools, and real-world applications of gen AI", date: "Feb 2026" },
+      { id: 4, type: "Built", title: "Built a live stock portfolio monitor and synced it to Google Sheets via vibe coding with Claude", date: "Mar 2, 2026" },
+      { id: 5, type: "Built", title: "Built this personal website end-to-end via vibe coding with Claude — zero manual HTML", date: "Mar 2026" }
+    ],
+    aiProjects: [
+      { id: 1, title: "Personal Website", desc: "Built entirely through vibe coding with Claude — no manual HTML written.", url: "https://github.com", tools: "Claude" }
+    ]
   };
 
   // image uploads replaced with filename-based approach
@@ -791,7 +1061,7 @@
   function closeLogin() { document.getElementById('loginModal').classList.remove('open'); }
 
   // ==================== PAGE NAV ====================
-  const pageIds = ["home","research","art","sources","about","article"];
+  const pageIds = ["home","research","aiprojects","art","sources","about","article"];
 
 
   function editArticle(id) {
@@ -831,7 +1101,7 @@
   }
   function showPage(id) {
     pageIds.forEach(p => document.getElementById("page-"+p).classList.remove("active"));
-    ["research","art","sources","about"].forEach(n => { const el = document.getElementById("nav-"+n); if(el) el.classList.remove("active"); });
+    ["research","aiprojects","art","sources","about"].forEach(n => { const el = document.getElementById("nav-"+n); if(el) el.classList.remove("active"); });
     document.getElementById("page-"+id).classList.add("active");
     if(id !== "home") { const el = document.getElementById("nav-"+id); if(el) el.classList.add("active"); }
     window.scrollTo({top:0, behavior:"smooth"});
@@ -850,6 +1120,7 @@
     renderPhotos();
     renderPaintings();
     renderHomePreview();
+    renderAIProjects();
     renderAdminLists();
     renderProfilePhoto();
     renderTexts();
@@ -879,9 +1150,9 @@
     data.photos.forEach(p => {
       const cell = document.createElement('div');
       cell.className = 'art-cell' + (p.layout ? ' ' + p.layout : '');
-      const displaySrc = p.previewSrc || p.src;
-      const innerContent = p.previewSrc
-        ? `<img src="${p.previewSrc}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;">`
+      const imgSrc = p.previewSrc || p.src;
+      const innerContent = imgSrc
+        ? `<img src="${imgSrc}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;">`
         : `<span style="font-size:11px;color:var(--muted);letter-spacing:0.06em;padding:8px;word-break:break-all;text-align:center;">${p.src}</span>`;
       cell.innerHTML = `<div class="art-cell-inner">${innerContent}</div><div class="art-caption">${p.title ? `<div class="art-caption-title">${p.title}</div>` : ''}<div class="art-caption-meta">${p.caption}</div></div>`;
       grid.appendChild(cell);
@@ -904,9 +1175,9 @@
     data.paintings.forEach(p => {
       const cell = document.createElement('div');
       cell.className = 'art-cell' + (p.layout ? ' ' + p.layout : '');
-      const displaySrc2 = p.previewSrc || p.src;
-      const innerContent2 = p.previewSrc
-        ? `<img src="${p.previewSrc}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;">`
+      const imgSrc2 = p.previewSrc || p.src;
+      const innerContent2 = imgSrc2
+        ? `<img src="${imgSrc2}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;">`
         : `<span style="font-size:11px;color:var(--muted);letter-spacing:0.06em;padding:8px;word-break:break-all;text-align:center;">${p.src}</span>`;
       cell.innerHTML = `<div class="art-cell-inner">${innerContent2}</div><div class="art-caption">${p.title ? `<div class="art-caption-title">${p.title}</div>` : ''}<div class="art-caption-meta">${p.caption}</div></div>`;
       grid.appendChild(cell);
@@ -949,6 +1220,87 @@
     }
   }
 
+
+  // ==================== AI PROJECTS ====================
+  function renderAIProjects() {
+    // Timeline
+    const ml = document.getElementById('milestones-list');
+    if (ml) {
+      ml.innerHTML = '';
+      if (!data.aiMilestones || data.aiMilestones.length === 0) {
+        ml.innerHTML = '<p style="font-size:13px;color:var(--muted);padding:12px 0;">No milestones yet — add one via ✏︎ Manage.</p>';
+      } else {
+        [...data.aiMilestones].reverse().forEach(m => {
+          const el = document.createElement('div');
+          el.className = 'milestone-entry';
+          el.innerHTML = `<div class="milestone-type">${m.type}</div><div class="milestone-title">${m.title}</div><div class="milestone-date">${m.date}</div>`;
+          ml.appendChild(el);
+        });
+      }
+    }
+    // Projects grid
+    const pg = document.getElementById('projects-grid');
+    if (pg) {
+      pg.innerHTML = '';
+      if (!data.aiProjects || data.aiProjects.length === 0) {
+        pg.innerHTML = '<p style="grid-column:1/-1;font-size:13px;color:var(--muted);padding:12px 0;">No projects yet — add one via ✏︎ Manage.</p>';
+      } else {
+        data.aiProjects.forEach(p => {
+          const a = document.createElement('a');
+          a.className = 'project-card';
+          a.href = p.url || '#';
+          if (p.url) a.target = '_blank';
+          a.innerHTML = `<div class="project-card-title">${p.title}</div><div class="project-card-desc">${p.desc}</div>${p.tools ? `<div class="project-card-tools">Built with ${p.tools}</div>` : ''}<div class="project-card-arrow">${p.url ? p.url.replace(/^https?:\/\//, '') + ' →' : ''}</div>`;
+          pg.appendChild(a);
+        });
+      }
+    }
+  }
+
+  function addMilestone() {
+    const title = document.getElementById('milestone-title').value.trim();
+    if (!title) { showToast('Please enter a description.'); return; }
+    if (!data.aiMilestones) data.aiMilestones = [];
+    data.aiMilestones.push({
+      id: Date.now(),
+      type: document.getElementById('milestone-type').value,
+      title,
+      date: document.getElementById('milestone-date').value.trim() || '—'
+    });
+    save(); renderAll();
+    document.getElementById('milestone-title').value = '';
+    document.getElementById('milestone-date').value = '';
+    showToast('Milestone added!');
+  }
+
+  function deleteMilestone(id) {
+    data.aiMilestones = data.aiMilestones.filter(m => m.id !== id);
+    save(); renderAll();
+    showToast('Milestone deleted.');
+  }
+
+  function addProject() {
+    const title = document.getElementById('project-title').value.trim();
+    if (!title) { showToast('Please enter a project title.'); return; }
+    if (!data.aiProjects) data.aiProjects = [];
+    data.aiProjects.push({
+      id: Date.now(),
+      title,
+      desc: document.getElementById('project-desc').value.trim(),
+      url: document.getElementById('project-url').value.trim(),
+      tools: document.getElementById('project-tools').value.trim()
+    });
+    save(); renderAll();
+    ['project-title','project-desc','project-url','project-tools'].forEach(id => document.getElementById(id).value = '');
+    showToast('Project added!');
+  }
+
+  function deleteProject(id) {
+    data.aiProjects = data.aiProjects.filter(p => p.id !== id);
+    save(); renderAll();
+    showToast('Project deleted.');
+  }
+
   function renderAdminLists() {
     // Articles
     const al = document.getElementById('admin-articles-list');
@@ -983,6 +1335,32 @@
       ptl.appendChild(div);
     });
     if (data.paintings.length === 0) ptl.innerHTML = '<p style="font-size:13px;color:var(--muted);padding:12px 0;">No paintings yet.</p>';
+
+    // Milestones
+    const mil = document.getElementById('admin-milestones-list');
+    if (mil) {
+      mil.innerHTML = '';
+      (data.aiMilestones || []).forEach(m => {
+        const div = document.createElement('div');
+        div.className = 'admin-item';
+        div.innerHTML = `<div class="admin-item-info"><div class="admin-item-title">${m.type}: ${m.title}</div><div class="admin-item-meta">${m.date}</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deleteMilestone(${m.id})">Delete</button></div>`;
+        mil.appendChild(div);
+      });
+      if (!data.aiMilestones || data.aiMilestones.length === 0) mil.innerHTML = '<p style="font-size:13px;color:var(--muted);padding:12px 0;">No milestones yet.</p>';
+    }
+
+    // Projects
+    const prl = document.getElementById('admin-projects-list');
+    if (prl) {
+      prl.innerHTML = '';
+      (data.aiProjects || []).forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'admin-item';
+        div.innerHTML = `<div class="admin-item-info"><div class="admin-item-title">${p.title}</div><div class="admin-item-meta">${p.desc}</div></div><div class="admin-item-actions"><button class="btn-danger" onclick="deleteProject(${p.id})">Delete</button></div>`;
+        prl.appendChild(div);
+      });
+      if (!data.aiProjects || data.aiProjects.length === 0) prl.innerHTML = '<p style="font-size:13px;color:var(--muted);padding:12px 0;">No projects yet.</p>';
+    }
   }
 
   // ==================== ADMIN OPEN/CLOSE ====================
