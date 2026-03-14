@@ -3,9 +3,7 @@
 <base href="/Tina.github.io/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tina Chen</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&amp;family=Inter:wght@300;400;500&amp;display=swap" rel="stylesheet">
+
 <style>
   :root {
     --bg:    #faf9f7;
@@ -14,8 +12,8 @@
     --muted: #7a7060;
     --accent:#c0392b;
     --rule:  #d8d2c6;
-    --serif: "Lora", Georgia, serif;
-    --sans:  "Inter", system-ui, sans-serif;
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -475,7 +473,7 @@
 </div>
 
 <!-- =================== ADMIN PANEL =================== -->
-<div class="admin-overlay open" id="adminOverlay" onclick="handleOverlayClick(event)">
+<div class="admin-overlay" id="adminOverlay" onclick="handleOverlayClick(event)">
   <div class="admin-panel" id="adminPanel">
     <div class="admin-header">
       <h2>Content Manager</h2>
@@ -755,7 +753,7 @@
 </header>
 
 <!-- HOME -->
-<div class="page" id="page-home">
+<div class="page active" id="page-home">
   <div class="home-outer">
     <div class="home-hero">
       <div class="home-hero-text">
@@ -918,7 +916,7 @@
 </div>
 
 <!-- ART -->
-<div class="page active" id="page-art">
+<div class="page" id="page-art">
   <div class="outer">
     <div class="two-col">
       <div class="sidebar">
